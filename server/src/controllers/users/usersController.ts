@@ -1,10 +1,9 @@
-import { getAllUsers, getUserById, deleteUser, createUser } from '@/services/user'
-import { NextFunction, Request, Response } from 'express'
-
 import httpCodes from '@/constants/httpCodes'
-
 import { NotFoundError } from '@/services/error'
-import {
+import { createUser, deleteUser, getAllUsers, getUserById } from '@/services/user'
+import type { TypedRequest } from '@/types/sharedTypes'
+import type { NextFunction, Request, Response } from 'express'
+import type {
   CreateUserRequestBody,
   CreateUserResponse,
   DeleteUserPathParams,
@@ -13,7 +12,6 @@ import {
   GetUserByIdPathParams,
   GetUserByIdResponse,
 } from './userTypes'
-import { TypedRequest } from '@/types/sharedTypes'
 
 async function handleGetAllUsers(_: Request, res: Response<GetAllUsersResponse>, next: NextFunction) {
   try {

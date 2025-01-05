@@ -1,7 +1,7 @@
-import { GetUserByIdPathParams } from '@/controllers/users/userTypes'
+import type { GetUserByIdPathParams } from '@/controllers/users/userTypes'
 import validateUserId from './utils/validateUserId'
 import { ValidationError } from '@/services/error'
-import { NextFunction, Request, Response } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
 type ErrorDetail = {

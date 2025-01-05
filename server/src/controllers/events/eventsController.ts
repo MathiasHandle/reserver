@@ -1,7 +1,7 @@
 import httpCodes from '@/constants/httpCodes'
 import type { Event } from '@/model/events'
 import { getAllEvents, getEventById } from '@/services/events'
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 
 type GetAllEventsResponse = {
   events: Event[]

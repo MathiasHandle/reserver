@@ -1,7 +1,8 @@
 import httpCodes from '@/constants/httpCodes'
 import { eventsController } from '@/controllers/events'
 import { usersController } from '@/controllers/users'
-import express, { Request, Response } from 'express'
+import type { Request, Response } from 'express';
+import express from 'express'
 import usersValidator from '@/middleware/validation/users'
 
 const router = express.Router()

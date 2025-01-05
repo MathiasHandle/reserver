@@ -1,4 +1,4 @@
-import { DeleteUserPathParams } from '@/controllers/users/userTypes'
+import type { DeleteUserPathParams } from '@/controllers/users/userTypes'
 import { ValidationError } from '@/services/error'
 import type { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'

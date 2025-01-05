@@ -1,5 +1,6 @@
 import httpCodes from '@/constants/httpCodes'
-import CustomError, { CustomErrorDetail } from './customError'
+import type { CustomErrorDetail } from './customError';
+import CustomError from './customError'
 
 class ValidationError<T extends CustomErrorDetail> extends CustomError<T> {
   constructor({

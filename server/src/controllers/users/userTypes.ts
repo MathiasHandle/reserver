@@ -1,6 +1,6 @@
 import type { User } from '@/model/users'
-import { UsersInsert } from '@/model/users/users'
-import { APIEmptyResponse } from '@/types/sharedTypes'
+import type { UsersInsert } from '@/model/users/users'
+import type { APIEmptyResponse } from '@/types/sharedTypes'
 
 type GetAllUsersResponse = {
   users: User[]
@@ -25,11 +25,11 @@ type DeleteUserPathParams = {
 type DeleteUserResponse = APIEmptyResponse
 
 export type {
-  GetAllUsersResponse,
-  GetUserByIdPathParams,
-  GetUserByIdResponse,
   CreateUserRequestBody,
   CreateUserResponse,
   DeleteUserPathParams,
   DeleteUserResponse,
+  GetAllUsersResponse,
+  GetUserByIdPathParams,
+  GetUserByIdResponse,
 }

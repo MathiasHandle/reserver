@@ -1,4 +1,4 @@
-import httpCodes from '@/constants/httpCodes'
+import type httpCodes from '@/constants/httpCodes'
 
 type CustomErrorDetail = {
   [key: string]: unknown

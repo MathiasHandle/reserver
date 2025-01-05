@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express'
-import { CustomError } from '@/services/error'
 import httpCodes from '@/constants/httpCodes'
+import { CustomError } from '@/services/error'
+import type { NextFunction, Request, Response } from 'express'
 
 const errorHandler = (err: unknown, _: Request, res: Response, next: NextFunction) => {
   // If headers have already been sent, call the next middleware

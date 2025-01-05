@@ -1,4 +1,4 @@
-import { text, int } from 'drizzle-orm/sqlite-core'
+import { int, text } from 'drizzle-orm/sqlite-core'
 import { sqliteTable } from 'drizzle-orm/sqlite-core'
 import { usersSchema } from '../users'
 

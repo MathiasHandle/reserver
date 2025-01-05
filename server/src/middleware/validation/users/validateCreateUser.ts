@@ -3,7 +3,7 @@ import { usersSchema } from '@/model/users'
 import { ValidationError } from '@/services/error'
 import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
 import { createInsertSchema } from 'drizzle-zod'
-import type { Response, NextFunction } from 'express'
+import type { NextFunction, Response } from 'express'
 import { z } from 'zod'
 
 type ErrorDetail = {

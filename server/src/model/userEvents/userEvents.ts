@@ -1,5 +1,5 @@
 import { int } from 'drizzle-orm/sqlite-core'
-import { sqliteTable, primaryKey } from 'drizzle-orm/sqlite-core'
+import { primaryKey, sqliteTable } from 'drizzle-orm/sqlite-core'
 import { usersSchema } from '../users'
 import { eventsSchema } from '../events'
 

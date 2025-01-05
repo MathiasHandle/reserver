@@ -1,5 +1,5 @@
 import { usersSchema } from '@/model/users'
-import { UsersInsert } from '@/model/users/users'
+import type { UsersInsert } from '@/model/users/users'
 import { db } from '@/services/database'
 
 async function createUser(newUser: UsersInsert) {
