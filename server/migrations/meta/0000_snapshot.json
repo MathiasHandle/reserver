@@ -49,12 +49,8 @@
           "name": "events_host_id_users_id_fk",
           "tableFrom": "events",
           "tableTo": "users",
-          "columnsFrom": [
-            "host_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["host_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -116,12 +112,8 @@
           "name": "user_events_participant_id_users_id_fk",
           "tableFrom": "user_events",
           "tableTo": "users",
-          "columnsFrom": [
-            "participant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["participant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
@@ -129,22 +121,15 @@
           "name": "user_events_event_id_events_id_fk",
           "tableFrom": "user_events",
           "tableTo": "events",
-          "columnsFrom": [
-            "event_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["event_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {
         "user_events_event_id_event_id_pk": {
-          "columns": [
-            "event_id",
-            "event_id"
-          ],
+          "columns": ["event_id", "event_id"],
           "name": "user_events_event_id_event_id_pk"
         }
       },

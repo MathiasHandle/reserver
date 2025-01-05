@@ -6,10 +6,16 @@ import { eventsSchema } from '../events'
 const userEvents = sqliteTable(
   'user_events',
   {
-    participantId: int('participant_id').references(() => usersSchema.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
-    eventId: int('event_id').references(() => eventsSchema.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
+    participantId: int('participant_id').references(() => usersSchema.id, {
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
+    }),
+    eventId: int('event_id').references(() => eventsSchema.id, {
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
+    }),
   },
-  (table) => {
+  table => {
     return {
       pk: primaryKey({ columns: [table.eventId, table.eventId] }),
     }

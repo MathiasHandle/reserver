@@ -1,7 +1,7 @@
 import httpCodes from '@/constants/httpCodes'
 import { eventsController } from '@/controllers/events'
 import { usersController } from '@/controllers/users'
-import type { Request, Response } from 'express';
+import type { Request, Response } from 'express'
 import express from 'express'
 import usersValidator from '@/middleware/validation/users'
 
@@ -15,8 +15,16 @@ const usersBaseUrl = '/api/users'
 
 router.get(usersBaseUrl, usersController.handleGetAllUsers)
 router.post(usersBaseUrl, usersValidator.validateCreateUser, usersController.handleCreateUser)
-router.get(`${usersBaseUrl}/:userId`, usersValidator.validateUserIdPath, usersController.handleGetUserById)
-router.delete(`${usersBaseUrl}/:userId`, usersValidator.validateDeleteUser, usersController.handleDeleteUser)
+router.get(
+  `${usersBaseUrl}/:userId`,
+  usersValidator.validateUserIdPath,
+  usersController.handleGetUserById
+)
+router.delete(
+  `${usersBaseUrl}/:userId`,
+  usersValidator.validateDeleteUser,
+  usersController.handleDeleteUser
+)
 
 const eventsBaseUrl = '/api/events'
 

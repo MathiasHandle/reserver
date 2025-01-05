@@ -10,7 +10,11 @@ type ErrorDetail = {
   [key: string]: string[] | undefined
 }
 
-function validateCreateUser(req: TypedRequest<EmptyObject, CreateUserRequestBody>, _: Response, next: NextFunction) {
+function validateCreateUser(
+  req: TypedRequest<EmptyObject, CreateUserRequestBody>,
+  _: Response,
+  next: NextFunction
+) {
   const userSchema = createInsertSchema(usersSchema)
 
   try {

@@ -13,7 +13,11 @@ import type {
   GetUserByIdResponse,
 } from './userTypes'
 
-async function handleGetAllUsers(_: Request, res: Response<GetAllUsersResponse>, next: NextFunction) {
+async function handleGetAllUsers(
+  _: Request,
+  res: Response<GetAllUsersResponse>,
+  next: NextFunction
+) {
   try {
     const users = await getAllUsers()
 
