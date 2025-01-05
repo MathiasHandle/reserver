@@ -1,15 +1,16 @@
 import type { CreateUserRequestBody } from '@/controllers/users/userTypes'
 import { usersSchema } from '@/model/users'
 import { ValidationError } from '@/services/error'
+import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
 import { createInsertSchema } from 'drizzle-zod'
-import type { Request, Response, NextFunction } from 'express'
+import type { Response, NextFunction } from 'express'
 import { z } from 'zod'
 
 type ErrorDetail = {
-  [key: string]: string[]
+  [key: string]: string[] | undefined
 }
 
-function validateCreateUser(req: Request<{}, {}, CreateUserRequestBody>, _: Response, next: NextFunction) {
+function validateCreateUser(req: TypedRequest<EmptyObject, CreateUserRequestBody>, _: Response, next: NextFunction) {
   const userSchema = createInsertSchema(usersSchema)
 
   try {

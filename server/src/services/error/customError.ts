@@ -1,7 +1,7 @@
 import httpCodes from '@/constants/httpCodes'
 
 type CustomErrorDetail = {
-  [key: string]: any
+  [key: string]: unknown
 } | null
 
 /**
@@ -34,3 +34,5 @@ class CustomError<T extends CustomErrorDetail> extends Error {
 }
 
 export default CustomError
+
+export type { CustomErrorDetail }

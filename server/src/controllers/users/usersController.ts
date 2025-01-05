@@ -13,19 +13,20 @@ import {
   GetUserByIdPathParams,
   GetUserByIdResponse,
 } from './userTypes'
+import { TypedRequest } from '@/types/sharedTypes'
 
 async function handleGetAllUsers(_: Request, res: Response<GetAllUsersResponse>, next: NextFunction) {
   try {
     const users = await getAllUsers()
 
-    res.status(httpCodes.OK).json({ users })
+    res.status(httpCodes.OK).json({ users: users ?? [] })
   } catch (err) {
     next(err)
   }
 }
 
 async function handleGetUserById(
-  req: Request<GetUserByIdPathParams>,
+  req: TypedRequest<GetUserByIdPathParams>,
   res: Response<GetUserByIdResponse>,
   next: NextFunction
 ) {
@@ -50,11 +51,12 @@ async function handleGetUserById(
 }
 
 async function handleCreateUser(
-  req: Request<{}, {}, CreateUserRequestBody>,
+  req: TypedRequest<Record<never, never>, CreateUserRequestBody>,
   res: Response<CreateUserResponse>,
   next: NextFunction
 ) {
   try {
+    console.log(req.params)
     await createUser(req.body)
 
     res.status(httpCodes.CREATED).json()

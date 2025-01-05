@@ -1,7 +1,7 @@
 import httpCodes from '@/constants/httpCodes'
-import CustomError from './customError'
+import CustomError, { CustomErrorDetail } from './customError'
 
-class NotFoundError<T> extends CustomError<T> {
+class NotFoundError<T extends CustomErrorDetail> extends CustomError<T> {
   constructor({
     message,
     detail,

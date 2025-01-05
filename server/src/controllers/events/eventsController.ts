@@ -1,8 +1,6 @@
 import httpCodes from '@/constants/httpCodes'
-import { eventsSchema } from '@/model/events'
-import type { Event, EventsInsert } from '@/model/events'
+import type { Event } from '@/model/events'
 import { getAllEvents, getEventById } from '@/services/events'
-import { createInsertSchema } from 'drizzle-zod'
 import { Request, Response } from 'express'
 
 type GetAllEventsResponse = {
@@ -17,7 +15,7 @@ async function handleGetAllEvents(_: Request, res: Response<GetAllEventsResponse
   try {
     const events = await getAllEvents()
 
-    res.status(httpCodes.OK).json({ events })
+    res.status(httpCodes.OK).json({ events: events ?? [] })
   } catch (err) {
     console.log(err)
     res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
@@ -29,7 +27,7 @@ type GetEventPathParams = {
 }
 
 type GetEventByIdResponse = {
-  event: Event
+  event: Event | null
 }
 
 async function handleGetEventById(
@@ -40,7 +38,7 @@ async function handleGetEventById(
     const eventId = parseInt(req.params.eventId)
     const eventData = await getEventById(eventId)
 
-    res.status(httpCodes.OK).json({ event: eventData })
+    res.status(httpCodes.OK).json({ event: eventData ?? null })
   } catch (err) {
     console.log(err)
     res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
