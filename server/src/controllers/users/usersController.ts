@@ -1,6 +1,12 @@
 import httpCodes from '@/constants/httpCodes'
 import { NotFoundError } from '@/services/error'
-import { createUser, deleteUser, getAllUsers, getUserById } from '@/services/user'
+import {
+  createUser,
+  deleteUser,
+  getAllUsers,
+  getUserByCredentials,
+  getUserById,
+} from '@/services/user'
 import type { TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
 import type {
@@ -11,6 +17,7 @@ import type {
   GetAllUsersResponse,
   GetUserByIdPathParams,
   GetUserByIdResponse,
+  LoginUserRequestBody,
 } from './userTypes'
 
 async function handleGetAllUsers(
@@ -82,9 +89,25 @@ async function handleDeleteUser(
   }
 }
 
+async function handleLogin(
+  req: Request<LoginUserRequestBody>,
+  res: Response<string>,
+  next: NextFunction
+) {
+  try {
+    const user = await getUserByCredentials(req.body)
+
+    // TODO create session and set cookie
+    res.status(httpCodes.ACCEPTED).json({ user })
+  } catch (err) {
+    next(err)
+  }
+}
+
 export default {
   handleGetAllUsers,
   handleGetUserById,
   handleCreateUser,
   handleDeleteUser,
+  handleLogin,
 }

@@ -37,6 +37,9 @@ router.delete(
   usersController.handleDeleteUser
 )
 
+// login user
+router.post(`${usersBaseUrl}/login`, usersValidator.validateLogin, usersController.handleLogin)
+
 //#endregion
 
 //#region Events

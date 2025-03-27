@@ -1,3 +1,4 @@
+import comparePasswords from './comparePasswords'
 import hashPassword from './hashPassword'
 
-export { hashPassword }
+export { comparePasswords, hashPassword }

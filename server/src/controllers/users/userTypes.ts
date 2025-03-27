@@ -26,6 +26,11 @@ type DeleteUserPathParams = {
 
 type DeleteUserResponse = APIEmptyResponse
 
+type LoginUserRequestBody = {
+  email: string
+  password: string
+}
+
 export type {
   CreateUserRequestBody,
   CreateUserResponse,
@@ -34,4 +39,5 @@ export type {
   GetAllUsersResponse,
   GetUserByIdPathParams,
   GetUserByIdResponse,
+  LoginUserRequestBody,
 }
