@@ -7,8 +7,8 @@
   "settings": {
     "typescript.tsdk": "./server/node_modules/typescript/lib",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "source.organizeImports": true
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
     }
   }
 }
