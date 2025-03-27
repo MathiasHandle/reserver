@@ -7,7 +7,9 @@ import express from 'express'
 
 const router = express.Router()
 
-router.get('/', (_: Request, res: Response) => {
+router.get('/', (req: Request, res: Response) => {
+  console.log(req.session)
+
   res.status(httpCodes.OK).send('Hello World')
 })
 

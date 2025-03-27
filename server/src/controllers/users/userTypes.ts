@@ -31,6 +31,10 @@ type LoginUserRequestBody = {
   password: string
 }
 
+type UserWithoutPassword = Omit<User, 'password'>
+
+type LoginUserResponse = { user: UserWithoutPassword }
+
 export type {
   CreateUserRequestBody,
   CreateUserResponse,
@@ -40,4 +44,6 @@ export type {
   GetUserByIdPathParams,
   GetUserByIdResponse,
   LoginUserRequestBody,
+  LoginUserResponse,
+  UserWithoutPassword,
 }

@@ -10,6 +10,7 @@ const envSchema = z.object({
     .default(process.env.NODE_ENV as 'development' | 'prod'),
   ORIGIN: z.string(),
   PORT: z.coerce.number(),
+  SESSION_SECRET: z.string().min(32),
 })
 
 type Env = z.infer<typeof envSchema>

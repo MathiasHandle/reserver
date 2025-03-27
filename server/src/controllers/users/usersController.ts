@@ -18,6 +18,7 @@ import type {
   GetUserByIdPathParams,
   GetUserByIdResponse,
   LoginUserRequestBody,
+  LoginUserResponse,
 } from './userTypes'
 
 async function handleGetAllUsers(
@@ -91,14 +92,19 @@ async function handleDeleteUser(
 
 async function handleLogin(
   req: Request<LoginUserRequestBody>,
-  res: Response<string>,
+  res: Response<LoginUserResponse>,
   next: NextFunction
 ) {
   try {
     const user = await getUserByCredentials(req.body)
 
-    // TODO create session and set cookie
-    res.status(httpCodes.ACCEPTED).json({ user })
+    // Regenerate session and save user data to it
+    req.session.regenerate(err => {
+      if (err) next(err)
+      req.session.user = user
+    })
+
+    res.status(httpCodes.OK).json({ user })
   } catch (err) {
     next(err)
   }
