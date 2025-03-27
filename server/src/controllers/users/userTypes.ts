@@ -14,7 +14,9 @@ type GetUserByIdResponse = {
   user: User
 }
 
-type CreateUserRequestBody = UsersInsert
+type CreateUserRequestBody = Omit<UsersInsert, 'id'> & {
+  confirmPassword: string
+}
 
 type CreateUserResponse = APIEmptyResponse
 

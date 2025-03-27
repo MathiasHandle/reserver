@@ -1,12 +1,21 @@
-import { usersSchema } from '@/model/users'
 import type { UsersInsert } from '@/model/users/users'
-import { db } from '@/services/database'
+import usersSchema from '@/model/users/users'
+import { db } from '../database'
+
+import { hashPassword } from '@/utils'
 
 async function createUser(newUser: UsersInsert) {
   try {
-    await db.insert(usersSchema).values(newUser)
+    const hashedPassword = await hashPassword(newUser.password)
+
+    const userToSave = {
+      ...newUser,
+      password: hashedPassword,
+    }
+
+    await db.insert(usersSchema).values(userToSave)
   } catch (err) {
-    console.error(err)
+    console.error('ERROR: ', err)
   }
 }
 
