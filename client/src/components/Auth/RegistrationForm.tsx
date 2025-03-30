@@ -1,3 +1,5 @@
+import { useCreateUser } from '@/hooks'
+import { ApiError } from '@/services/fetch/apiTypes'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -44,7 +46,7 @@ const formSchema = z
       .max(50, {
         message: getMaxMsg('Password'),
       }),
-    reapeatPassword: z
+    confirmPassword: z
       .string()
       .min(2, {
         message: getMinMsg('Repeat password', 2),
@@ -53,9 +55,9 @@ const formSchema = z
         message: getMaxMsg('Repeat password field'),
       }),
   })
-  .refine(values => values.password === values.reapeatPassword, {
+  .refine(values => values.password === values.confirmPassword, {
     message: "Passwords don't match",
-    path: ['reapeatPassword'],
+    path: ['confirmPassword'],
   })
 
 function RegistrationForm() {
@@ -66,12 +68,31 @@ function RegistrationForm() {
       surname: '',
       email: '',
       password: '',
-      reapeatPassword: '',
+      confirmPassword: '',
     },
   })
 
-  function onSubmitFn(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  const { mutate: createUser } = useCreateUser()
+
+  type FormSchema = z.infer<typeof formSchema>
+
+  async function onSubmitFn(values: z.infer<typeof formSchema>) {
+    createUser(values, {
+      onError: err => {
+        // TODO better typing of error, ideal scenario would be to generate error type from API schema
+        // Set errors from response
+        if (err instanceof ApiError) {
+          const entries = Object.entries<keyof FormSchema>(err.detail.detail)
+
+          entries.forEach(([key, value]) => {
+            form.setError(key as keyof FormSchema, { message: value[0] })
+          })
+        }
+      },
+      onSuccess: () => {
+        console.log('createUser success')
+      },
+    })
   }
 
   return (
@@ -139,7 +160,7 @@ function RegistrationForm() {
 
         <FormField
           control={form.control}
-          name="reapeatPassword"
+          name="confirmPassword"
           render={({ field }) => (
             <FormItem>
               <InputLabel text="Repeat password" />
