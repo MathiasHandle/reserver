@@ -60,8 +60,11 @@ async function getUserByCredentials(credentials: LoginUserRequestBody) {
 
     return userWithoutPassword
   } catch (err) {
-    console.error(err)
-    throw err
+    if (err instanceof LoginError) {
+      throw err
+    }
+
+    throw new Error('Internal server error')
   }
 }
 

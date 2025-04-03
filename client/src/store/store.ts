@@ -1,40 +1,51 @@
+import { cloneDeep } from 'es-toolkit'
 import { create } from 'zustand'
-
-type ModalNames = 'registration' | 'login'
 
 type ModalOptions = {
   isOpen: boolean
 }
 
-type ModalStoreState = {
+type StoreState = {
   modals: {
     [key in ModalNames]: ModalOptions
   }
 }
 
-type ModalStoreActions = {
-  setModal: (modal: ModalNames, payload: ModalOptions) => void
+type SetModalPayload = ModalOptions & {
+  resetModals?: boolean
+}
+
+type StoreActions = {
+  setModal: (modal: ModalNames, payload: SetModalPayload) => void
   resetModals: () => void
 }
 
-const initialValues = {
+const modalInitialValues = {
   registration: {
     isOpen: false,
   },
   login: {
     isOpen: false,
   },
-}
+} as const
 
-const useStore = create<ModalStoreState & ModalStoreActions>(set => ({
-  modals: initialValues,
+type ModalNames = keyof typeof modalInitialValues
 
-  setModal: (modalName, payload) =>
+const useStore = create<StoreState & StoreActions>((set, get) => ({
+  modals: modalInitialValues,
+
+  setModal: (modalName, payload) => {
+    if (payload.resetModals) {
+      get().resetModals()
+    }
+
     set(state => ({
       modals: { ...state.modals, [modalName]: { ...payload } },
-    })),
+    }))
+  },
 
-  resetModals: () => set(() => ({ modals: { ...initialValues } })),
+  resetModals: () =>
+    set(() => ({ modals: cloneDeep<typeof modalInitialValues>(modalInitialValues) })),
 }))
 
 export default useStore

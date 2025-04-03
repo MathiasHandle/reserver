@@ -9,6 +9,7 @@ import {
 } from '@/services/user'
 import type { TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
+import { promisify } from 'node:util'
 import type {
   CreateUserRequestBody,
   CreateUserResponse,
@@ -99,10 +100,8 @@ async function handleLogin(
     const user = await getUserByCredentials(req.body)
 
     // Regenerate session and save user data to it
-    req.session.regenerate(err => {
-      if (err) next(err)
-      req.session.user = user
-    })
+    await promisify(req.session.regenerate).call(req.session)
+    req.session.user = user
 
     res.status(httpCodes.OK).json({ user })
   } catch (err) {

@@ -1,12 +1,14 @@
 import { ApiEmptyResponse } from '@/services/fetch'
 
+type User = {
+  id: number
+  name: string
+  surname: string
+  email: string
+}
+
 type GetAllUsersResponse = {
-  users: {
-    id: number
-    name: string
-    surname: string
-    email: string
-  }[]
+  users: User[]
 }
 
 type CreateUserRequestBody = {
@@ -19,4 +21,19 @@ type CreateUserRequestBody = {
 
 type CreateUserResponse = ApiEmptyResponse
 
-export type { CreateUserRequestBody, CreateUserResponse, GetAllUsersResponse }
+type LoginUserResponse = {
+  user: User
+}
+
+type LoginUserRequestBody = {
+  email: string
+  password: string
+}
+
+export type {
+  CreateUserRequestBody,
+  CreateUserResponse,
+  GetAllUsersResponse,
+  LoginUserRequestBody,
+  LoginUserResponse,
+}
