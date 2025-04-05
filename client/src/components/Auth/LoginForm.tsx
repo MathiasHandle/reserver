@@ -31,7 +31,11 @@ const formSchema = z.object({
     }),
 })
 
-function LoginForm() {
+type LoginFormProps = {
+  onSuccess?: () => void
+}
+
+function LoginForm(props: LoginFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,7 +63,7 @@ function LoginForm() {
         }
       },
       onSuccess: () => {
-        console.log('loginUser success')
+        props.onSuccess?.()
       },
     })
   }

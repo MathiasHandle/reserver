@@ -11,7 +11,7 @@ type FetchOptions<TRequestBody> = {
   /* TODO add support for query and path params */
 }
 
-async function makeRequest<TResponse, TBody>(
+async function makeRequest<TResponse, TBody = undefined>(
   options: FetchOptions<TBody>
 ): Promise<{ data: TResponse; status: number }> {
   try {
@@ -22,6 +22,7 @@ async function makeRequest<TResponse, TBody>(
         'Content-Type': 'application/json',
         ...options.headers,
       },
+      credentials: 'include',
     })
 
     const dataJson: TResponse = await response.json()

@@ -2,13 +2,13 @@ import { api } from '@/api'
 import { queryClient, queryKeys } from '@/services/reactQuery'
 import { useMutation } from '@tanstack/react-query'
 
-function useLogInUser() {
+function useLogoutUser() {
   return useMutation({
-    mutationFn: api.users.loginUser,
+    mutationFn: api.users.logoutUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.users.userDetail() })
     },
   })
 }
 
-export default useLogInUser
+export default useLogoutUser

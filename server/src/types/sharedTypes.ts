@@ -2,11 +2,12 @@ import type { Request } from 'express'
 
 type EmptyObject = Record<string, never>
 type APIEmptyResponse = EmptyObject
+type ApiEmptyRequestBody = EmptyObject
 
 type TypedRequest<
-  PathParams = EmptyObject,
-  ReqBody = Record<string, unknown>,
-  QueryParams = Record<string, unknown>,
-> = Request<PathParams, Record<string, unknown>, ReqBody, QueryParams>
+  TPathParams = EmptyObject,
+  TReqBody = Record<string, unknown>,
+  TQueryParams = Record<string, unknown>,
+> = Request<TPathParams, Record<string, unknown>, TReqBody, TQueryParams>
 
-export type { APIEmptyResponse, TypedRequest, EmptyObject }
+export type { ApiEmptyRequestBody, APIEmptyResponse, EmptyObject, TypedRequest }

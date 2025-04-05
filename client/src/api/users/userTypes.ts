@@ -30,10 +30,15 @@ type LoginUserRequestBody = {
   password: string
 }
 
+type GetUserResponse = {
+  user: User
+}
+
 export type {
   CreateUserRequestBody,
   CreateUserResponse,
   GetAllUsersResponse,
+  GetUserResponse,
   LoginUserRequestBody,
   LoginUserResponse,
 }

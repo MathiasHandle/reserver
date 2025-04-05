@@ -1,10 +1,10 @@
 type ApiEmptyResponse = Record<string, never>
 
-class ApiError<T> extends Error {
+class ApiError<TDetail> extends Error {
   message: string
-  detail: T
+  detail: TDetail
 
-  constructor({ message, detail }: { message?: string; detail: T }) {
+  constructor({ message, detail }: { message?: string; detail: TDetail }) {
     super(message)
     this.message = 'API error'
     this.detail = detail

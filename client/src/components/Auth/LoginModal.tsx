@@ -30,7 +30,7 @@ function LoginModal() {
                 </CardHeader>
 
                 <CardContent>
-                  <LoginForm />
+                  <LoginForm onSuccess={() => setModal('login', { isOpen: false })} />
 
                   <div className="mt-8 text-center sm:mt-4">
                     Not registered yet?

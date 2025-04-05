@@ -1,5 +1,5 @@
 import httpCodes from '@/constants/httpCodes'
-import { NotFoundError } from '@/services/error'
+import { NotFoundError, UnauthorizedError } from '@/services/error'
 import {
   createUser,
   deleteUser,
@@ -7,10 +7,11 @@ import {
   getUserByCredentials,
   getUserById,
 } from '@/services/user'
-import type { TypedRequest } from '@/types/sharedTypes'
+import type { ApiEmptyRequestBody, APIEmptyResponse, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
 import { promisify } from 'node:util'
 import type {
+  CheckAuthResponse,
   CreateUserRequestBody,
   CreateUserResponse,
   DeleteUserPathParams,
@@ -67,7 +68,6 @@ async function handleCreateUser(
   next: NextFunction
 ) {
   try {
-    console.log(req.params)
     await createUser(req.body)
 
     res.status(httpCodes.CREATED).json()
@@ -109,10 +109,47 @@ async function handleLogin(
   }
 }
 
+// TODO error handling check
+function handleCheckAuth(
+  req: Request<ApiEmptyRequestBody>,
+  res: Response<CheckAuthResponse>,
+  next: NextFunction
+) {
+  // TODO delete this check + introduce new AuthenticatedRequest type
+  if (!req.session.user) {
+    const unauthorizedError = new UnauthorizedError<null>({
+      status: httpCodes.UNAUTHORIZED,
+      detail: null,
+    })
+
+    return next(unauthorizedError)
+  }
+
+  res.status(httpCodes.OK).json({ user: req.session.user })
+}
+
+// TODO error handling check
+// TODO mark this route as protected via middleware
+async function handleLogout(
+  req: Request<ApiEmptyRequestBody>,
+  res: Response<APIEmptyResponse>,
+  next: NextFunction
+) {
+  try {
+    await promisify(req.session.destroy).call(req.session)
+
+    res.status(httpCodes.OK).json({})
+  } catch (err) {
+    next(err)
+  }
+}
+
 export default {
   handleGetAllUsers,
   handleGetUserById,
   handleCreateUser,
   handleDeleteUser,
   handleLogin,
+  handleCheckAuth,
+  handleLogout,
 }

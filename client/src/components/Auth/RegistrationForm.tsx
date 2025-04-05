@@ -90,7 +90,7 @@ function RegistrationForm() {
         }
       },
       onSuccess: () => {
-        console.log('createUser success')
+        // TODO set user in query client & refetch user detail
       },
     })
   }
