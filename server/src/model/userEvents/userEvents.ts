@@ -1,7 +1,6 @@
-import { int } from 'drizzle-orm/sqlite-core'
-import { primaryKey, sqliteTable } from 'drizzle-orm/sqlite-core'
-import { usersSchema } from '../users'
+import { int, primaryKey, sqliteTable } from 'drizzle-orm/sqlite-core'
 import { eventsSchema } from '../events'
+import { usersSchema } from '../users'
 
 const userEvents = sqliteTable(
   'user_events',
@@ -15,11 +14,7 @@ const userEvents = sqliteTable(
       onDelete: 'cascade',
     }),
   },
-  table => {
-    return {
-      pk: primaryKey({ columns: [table.eventId, table.eventId] }),
-    }
-  }
+  table => [primaryKey({ columns: [table.participantId, table.eventId] })]
 )
 
 export default userEvents

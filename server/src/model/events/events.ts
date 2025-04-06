@@ -1,5 +1,5 @@
-import { int, text } from 'drizzle-orm/sqlite-core'
-import { sqliteTable } from 'drizzle-orm/sqlite-core'
+import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { eventCategoriesSchema } from '../eventCategories'
 import { usersSchema } from '../users'
 
 const eventsSchema = sqliteTable('events', {
@@ -7,7 +7,11 @@ const eventsSchema = sqliteTable('events', {
   name: text('name').notNull(),
   date: text('date').notNull(),
   maxCapacity: int('max_capacity').notNull(),
-  hostId: int('host_id').references(() => usersSchema.id),
+  hostId: int('host_id')
+    .references(() => usersSchema.id)
+    .notNull(),
+  categoryId: int('category_id').references(() => eventCategoriesSchema.id),
+  description: text('description').notNull(),
 })
 
 type Event = typeof eventsSchema.$inferSelect
