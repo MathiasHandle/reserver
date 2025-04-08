@@ -13,6 +13,7 @@ const eventNames = [
 ] as const
 
 const eventCategoriesSchema = sqliteTable('event_categories', {
+  // FIXME add notNull to id
   id: int('id').primaryKey({ autoIncrement: true }),
   name: text('name', { enum: eventNames }).notNull(),
 })

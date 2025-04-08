@@ -2,6 +2,7 @@ import httpCodes from '@/constants/httpCodes'
 import { eventsController } from '@/controllers/events'
 import { usersController } from '@/controllers/users'
 import { checkAuth } from '@/middleware/auth'
+import eventsValidator from '@/middleware/validation/events'
 import usersValidator from '@/middleware/validation/users'
 import type { Request, Response } from 'express'
 import express from 'express'
@@ -59,8 +60,19 @@ router.post(`${usersBaseUrl}/login`, usersValidator.validateLogin, usersControll
 //#region Events
 const eventsBaseUrl = '/api/events'
 
-router.get(eventsBaseUrl, eventsController.handleGetAllEvents)
+// Get all events
+router.get(eventsBaseUrl, eventsValidator.validateGetAllEvents, eventsController.handleGetAllEvents)
+
+// Get event categories
+router.get(
+  `${eventsBaseUrl}/categories`,
+  eventsValidator.validateGetEventCategories,
+  eventsController.handleGetEventCategories
+)
+
+// Get event by id
 router.get(`${eventsBaseUrl}/:eventId`, eventsController.handleGetEventById)
+
 //#endregion
 
 export default router

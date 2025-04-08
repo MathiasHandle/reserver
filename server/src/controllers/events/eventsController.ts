@@ -1,24 +1,45 @@
 import httpCodes from '@/constants/httpCodes'
 import type { Event } from '@/model/events'
-import { getAllEvents, getEventById } from '@/services/events'
-import type { Request, Response } from 'express'
-
-type GetAllEventsResponse = {
-  events: Event[]
-}
+import { getAllEvents, getEventById, getEventCategories } from '@/services/events'
+import type { TypedRequest } from '@/types/sharedTypes'
+import type { NextFunction, Request, Response } from 'express'
+import type {
+  GetAllEventsQueryParams,
+  GetAllEventsResponse,
+  GetEventCategoriesQueryParams,
+  GetEventCategoriesResponse,
+} from './eventTypes'
 
 type ErrorResponse = {
   message: string
 }
 
-async function handleGetAllEvents(_: Request, res: Response<GetAllEventsResponse | ErrorResponse>) {
+async function handleGetAllEvents(
+  req: TypedRequest<undefined, undefined, GetAllEventsQueryParams>,
+  res: Response<GetAllEventsResponse | ErrorResponse>
+) {
   try {
-    const events = await getAllEvents()
+    const events = await getAllEvents(req.query)
 
     res.status(httpCodes.OK).json({ events: events ?? [] })
   } catch (err) {
     console.log(err)
     res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
+  }
+}
+
+async function handleGetEventCategories(
+  req: TypedRequest<undefined, undefined, GetEventCategoriesQueryParams>,
+  res: Response<GetEventCategoriesResponse>,
+  next: NextFunction
+) {
+  try {
+    const categories = await getEventCategories(req.query)
+
+    res.status(httpCodes.OK).json({ categories: categories ?? [] })
+  } catch (err) {
+    console.log(err)
+    next(err)
   }
 }
 
@@ -48,4 +69,5 @@ async function handleGetEventById(
 export default {
   handleGetAllEvents,
   handleGetEventById,
+  handleGetEventCategories,
 }

@@ -1,6 +1,7 @@
 import { api } from '@/api'
 import { useLogoutUser } from '@/hooks'
 import { MainBanner } from './components'
+import TopCategories from './components/TopCategories'
 
 function Homepage() {
   async function onCheckUser() {
@@ -20,12 +21,16 @@ function Homepage() {
 
   return (
     <>
-      <MainBanner />
+      <main className="container">
+        <MainBanner />
 
-      <div className="container mx-auto flex gap-6">
-        <button onClick={onCheckUser}>Check user</button>
-        <button onClick={onLogout}>Logout</button>
-      </div>
+        <TopCategories />
+
+        <div className="mx-auto flex gap-6">
+          <button onClick={onCheckUser}>Check user</button>
+          <button onClick={onLogout}>Logout</button>
+        </div>
+      </main>
     </>
   )
 }

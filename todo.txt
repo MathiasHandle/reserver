@@ -1,0 +1,42 @@
+Client
+TODO HP
+  TODO top 3 events
+
+TODO events page
+  TODO sorting by categories
+
+TODO event detail page
+  TODO ux
+    - name
+    - description
+    - max capacity
+    - registered capacity
+    - date
+  TODO join event
+    - if Im owner I cant joint!
+  TODO delete event (if im the owner)
+
+TODO create new event
+
+TODO profile page
+  TODO ux - Lorem ipsum?
+  TODO logout
+  TODO list owned events
+
+TODO footer
+  - with dumb links
+
+TODO remove console.logs
+
+TODO ghosts
+
+
+Server
+TODO check if all errors are handled properly
+TODO Request<...> -> TypedRequest<...>
+TODO remove console.logs
+
+
+
+
+TODO remove all todos, fixme, bug ...

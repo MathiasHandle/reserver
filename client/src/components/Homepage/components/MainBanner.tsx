@@ -28,6 +28,7 @@ function MainBanner() {
 
           <span className="block">Concerts, workshops, meetings and more</span>
 
+          {/* TODO when user is logged in redirect to events page */}
           <Button
             variant={'action'}
             onClick={() =>
