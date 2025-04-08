@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/ui/skeleton'
 import useGetEventCategories from '@/hooks/api/useGetEventCategories'
 import TopCategory from './TopCategory'
 
@@ -11,8 +12,13 @@ function TopCategories() {
 
   return (
     <div className="container m-auto my-8">
-      {/* TODO ghost loading */}
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className="grid grid-cols-2 gap-2 px-4 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-4 sm:px-0 md:gap-x-8">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Skeleton key={index} className="h-20" />
+          ))}
+        </div>
+      )}
 
       {data?.categories && (
         <div className="grid grid-cols-2 gap-2 px-4 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-4 sm:px-0 md:gap-x-8">

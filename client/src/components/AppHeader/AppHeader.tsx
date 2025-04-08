@@ -28,8 +28,8 @@ const AppHeader = () => {
   return (
     <>
       <div className="bg-card">
-        <div className="container mx-auto flex items-center justify-between">
-          <nav className="px-4 py-6">
+        <div className="container mx-auto flex items-center justify-between px-4 py-6 sm:px-0">
+          <nav>
             <ul className="container m-auto flex gap-2">
               {links.map((link, index) => (
                 <li key={index}>

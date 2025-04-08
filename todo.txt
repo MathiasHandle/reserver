@@ -23,7 +23,7 @@ TODO profile page
   TODO logout
   TODO list owned events
 
-TODO footer
+DONE footer
   - with dumb links
 
 TODO remove console.logs
