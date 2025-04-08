@@ -4,6 +4,9 @@ TODO HP
 
 TODO events page
   TODO sorting by categories
+  TODO pagination
+  EventCard
+  - TODO free spots / how many seats are booked already
 
 TODO event detail page
   TODO ux
@@ -12,6 +15,7 @@ TODO event detail page
     - max capacity
     - registered capacity
     - date
+    - TODO free spots / how many seats are booked already
   TODO join event
     - if Im owner I cant joint!
   TODO delete event (if im the owner)

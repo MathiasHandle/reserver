@@ -5,14 +5,14 @@ import TopCategory from './TopCategory'
 function TopCategories() {
   const limit = 6
 
-  const { data, isLoading } = useGetEventCategories({
+  const { data, isFetching } = useGetEventCategories({
     limit,
     sort: 'desc',
   })
 
   return (
     <div className="container m-auto my-8">
-      {isLoading && (
+      {isFetching && (
         <div className="grid grid-cols-2 gap-2 px-4 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-4 sm:px-0 md:gap-x-8">
           {Array.from({ length: 6 }).map((_, index) => (
             <Skeleton key={index} className="h-20" />
