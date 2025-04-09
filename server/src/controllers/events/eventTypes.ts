@@ -3,7 +3,7 @@ import type { eventsSchema } from '@/model/events'
 
 type EventCategory = typeof eventCategoriesSchema.$inferSelect
 
-type EventWithCategory = Omit<typeof eventsSchema.$inferSelect, 'categoryId' | 'hostId'> & {
+type EventWithCategory = Omit<typeof eventsSchema.$inferSelect, 'categoryId'> & {
   // the null is bug in drizzle
   // https://github.com/drizzle-team/drizzle-orm/issues/2157
   eventCategory: EventCategory | null

@@ -16,6 +16,7 @@ type Event = {
   id: number
   name: string
   date: string
+  hostId: number
   maxCapacity: number
   description: string
   eventCategory: EventCategory

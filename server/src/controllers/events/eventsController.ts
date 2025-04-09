@@ -56,7 +56,7 @@ async function handleGetEventById(
     if (!eventData) {
       const notFoundError = new NotFoundError({
         message: 'Event not found',
-        status: httpCodes.UNPROCESSABLE_ENTITY,
+        status: httpCodes.NOT_FOUND,
         detail: null,
       })
 

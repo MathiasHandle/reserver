@@ -17,7 +17,7 @@ async function getAllEvents(
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { categoryId, hostId, ...eventRest } = getTableColumns(eventsSchema)
+    const { categoryId, ...eventRest } = getTableColumns(eventsSchema)
     const eventCategory = getTableColumns(eventCategoriesSchema)
 
     const eventsData = await db
@@ -27,6 +27,8 @@ async function getAllEvents(
       .limit(limit)
       .offset(offset)
       .where(categoryIdFilter ? eq(eventsSchema.categoryId, categoryIdFilter) : undefined)
+
+    console.log(eventsData)
 
     return eventsData
   } catch (err) {

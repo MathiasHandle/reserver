@@ -6,7 +6,7 @@ import { eq, getTableColumns } from 'drizzle-orm'
 async function getEventById(eventId: number) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { hostId, categoryId, ...eventDetail } = getTableColumns(eventsSchema)
+    const { categoryId, ...eventDetail } = getTableColumns(eventsSchema)
     const eventCategory = getTableColumns(eventCategoriesSchema)
 
     const eventData = await db
