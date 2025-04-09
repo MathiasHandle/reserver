@@ -19,6 +19,10 @@ TODO event detail page
   TODO join event
     - if Im owner I cant joint!
   TODO delete event (if im the owner)
+  TODO implement joining an event
+  TODO if user is not logged in -> open login modal
+  TODO if user already joined -> display different text in button
+  TODO go back to events button
 
 TODO create new event
 
@@ -33,6 +37,10 @@ DONE footer
 TODO remove console.logs
 
 TODO ghosts
+
+Registration
+TODO close modal after sucessfull Registration
+TODO automatical sign in for user after registration
 
 
 Server

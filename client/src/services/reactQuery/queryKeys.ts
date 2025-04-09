@@ -12,6 +12,8 @@ const queryKeys = {
 
     eventList: () => [...queryKeys.events.all(), 'list'] as const,
 
+    eventDetail: (eventId: number) => [...queryKeys.events.all(), 'detail', eventId] as const,
+
     eventCategories: (options?: GetEventCategoriesQueryParams) =>
       [
         ...queryKeys.events.all(),

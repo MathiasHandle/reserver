@@ -3,11 +3,28 @@ import ImgWebp from '@/assets/main-banner.webp'
 import { LoginModal, RegistrationModal } from '@/components/Auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { useUser } from '@/hooks'
 import { useStore } from '@/store'
+import { useRouter } from '@tanstack/react-router'
 
 function MainBanner() {
   const modals = useStore(state => state.modals)
   const setModal = useStore(state => state.setModal)
+
+  const { data: userData } = useUser()
+
+  const router = useRouter()
+
+  function handleJoinUsClick() {
+    if (userData?.email) {
+      router.navigate({ to: '/events' })
+      return
+    }
+
+    setModal('registration', {
+      isOpen: !modals.registration.isOpen,
+    })
+  }
 
   return (
     <div className="relative mt-4">
@@ -28,17 +45,12 @@ function MainBanner() {
 
           <span className="block">Concerts, workshops, meetings and more</span>
 
-          {/* TODO when user is logged in redirect to events page */}
           <Button
             variant={'action'}
-            onClick={() =>
-              setModal('registration', {
-                isOpen: !modals.registration.isOpen,
-              })
-            }
+            onClick={handleJoinUsClick}
             className="2xl:text-2 xl m-auto text-xl font-semibold sm:text-base md:text-lg"
           >
-            Join us
+            Explore events
           </Button>
 
           <RegistrationModal />

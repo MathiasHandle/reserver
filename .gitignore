@@ -1,5 +1,7 @@
 **/node_modules
 
+client/src/routeTree.gen.ts
+
 server/dist
 server/database.db
 
