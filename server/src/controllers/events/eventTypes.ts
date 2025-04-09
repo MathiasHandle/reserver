@@ -32,10 +32,20 @@ type GetEventCategoriesResponse = {
   categories: EventCategoryWithEventCount[]
 }
 
+type GetEventDetailPathParams = {
+  eventId: number
+}
+
+type GetEventDetailResponse = {
+  event: EventWithCategory
+}
+
 export type {
   EventWithCategory,
   GetAllEventsQueryParams,
   GetAllEventsResponse,
   GetEventCategoriesQueryParams,
   GetEventCategoriesResponse,
+  GetEventDetailPathParams,
+  GetEventDetailResponse,
 }

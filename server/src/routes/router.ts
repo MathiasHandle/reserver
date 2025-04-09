@@ -71,7 +71,11 @@ router.get(
 )
 
 // Get event by id
-router.get(`${eventsBaseUrl}/:eventId`, eventsController.handleGetEventById)
+router.get(
+  `${eventsBaseUrl}/:eventId`,
+  eventsValidator.validateGetEventDetail,
+  eventsController.handleGetEventById
+)
 
 //#endregion
 

@@ -10,7 +10,10 @@ import session from 'express-session'
 
 const app = express()
 
-app.use(cors({ origin: env.ORIGIN, credentials: true }))
+// Convert the ORIGIN environment variable to an array of allowed origins
+const allowedOrigins = env.ORIGIN.split(',').map(origin => origin.trim())
+
+app.use(cors({ origin: allowedOrigins, credentials: true }))
 
 app.use(bodyParser.json())
 

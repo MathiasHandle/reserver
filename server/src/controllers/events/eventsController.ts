@@ -1,5 +1,5 @@
 import httpCodes from '@/constants/httpCodes'
-import type { Event } from '@/model/events'
+import { NotFoundError } from '@/services/error'
 import { getAllEvents, getEventById, getEventCategories } from '@/services/events'
 import type { TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
@@ -8,6 +8,8 @@ import type {
   GetAllEventsResponse,
   GetEventCategoriesQueryParams,
   GetEventCategoriesResponse,
+  GetEventDetailPathParams,
+  GetEventDetailResponse,
 } from './eventTypes'
 
 type ErrorResponse = {
@@ -43,24 +45,30 @@ async function handleGetEventCategories(
   }
 }
 
-type GetEventPathParams = {
-  eventId: string
-}
-
-type GetEventByIdResponse = {
-  event: Event | null
-}
-
 async function handleGetEventById(
-  req: Request<GetEventPathParams>,
-  res: Response<GetEventByIdResponse | ErrorResponse>
+  req: Request<GetEventDetailPathParams>,
+  res: Response<GetEventDetailResponse | ErrorResponse>,
+  next: NextFunction
 ) {
   try {
-    const eventId = parseInt(req.params.eventId)
-    const eventData = await getEventById(eventId)
+    const eventData = await getEventById(req.params.eventId)
 
-    res.status(httpCodes.OK).json({ event: eventData ?? null })
+    if (!eventData) {
+      const notFoundError = new NotFoundError({
+        message: 'Event not found',
+        status: httpCodes.UNPROCESSABLE_ENTITY,
+        detail: null,
+      })
+
+      return next(notFoundError)
+    }
+
+    res.status(httpCodes.OK).json({ event: eventData })
   } catch (err) {
+    if (err instanceof NotFoundError) {
+      return next(err)
+    }
+
     console.log(err)
     res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
   }
