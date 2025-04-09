@@ -1,7 +1,8 @@
 import { useGetEventDetail } from '@/hooks'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
-import EventDetailGhost from './EventDetailGhost'
+import EventCardFooter from './components/EventCardFooter'
+import EventDetailGhost from './components/EventDetailGhost'
 
 type EventDetailPageProps = {
   eventId: number
@@ -51,9 +52,12 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
                 </div>
               </CardContent>
 
-              <CardFooter className="mt-8 flex flex-col justify-between p-0 px-6 sm:flex-row">
-                <span>Capacity: {data.event.maxCapacity}</span>
-                <time className="italic">{data.event.date}</time>
+              <CardFooter className="px-6 py-0">
+                <EventCardFooter
+                  maxCapacity={data.event.maxCapacity}
+                  participantsCount={data.event.participantsCount}
+                  date={data.event.date}
+                />
               </CardFooter>
             </Card>
           </>

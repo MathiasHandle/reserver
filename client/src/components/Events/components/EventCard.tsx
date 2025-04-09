@@ -1,7 +1,8 @@
 import { Event } from '@/api/events/eventTypes'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
-import { formatDate, truncateText } from '@/utils'
+import { truncateText } from '@/utils'
 import { Link } from '@tanstack/react-router'
+import EventCardFooter from './EventCardFooter'
 
 type EventCardProps = {
   event: Event
@@ -9,7 +10,7 @@ type EventCardProps = {
 
 function EventCard(props: EventCardProps) {
   const {
-    event: { id, name, description, date, eventCategory, maxCapacity },
+    event: { id, name, description, date, eventCategory, maxCapacity, participantsCount },
   } = props
 
   return (
@@ -33,14 +34,11 @@ function EventCard(props: EventCardProps) {
         </Link>
 
         <CardFooter>
-          <div className="flex w-full justify-between">
-            <div>
-              Capacity: <b>{maxCapacity}</b>
-            </div>
-            <time dateTime={date} className="italic">
-              {formatDate(date)}
-            </time>
-          </div>
+          <EventCardFooter
+            participantsCount={participantsCount}
+            date={date}
+            maxCapacity={maxCapacity}
+          />
         </CardFooter>
       </Card>
     </li>

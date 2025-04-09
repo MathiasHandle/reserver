@@ -3,10 +3,11 @@ import type { eventsSchema } from '@/model/events'
 
 type EventCategory = typeof eventCategoriesSchema.$inferSelect
 
-type EventWithCategory = Omit<typeof eventsSchema.$inferSelect, 'categoryId'> & {
+type Event = Omit<typeof eventsSchema.$inferSelect, 'categoryId'> & {
   // the null is bug in drizzle
   // https://github.com/drizzle-team/drizzle-orm/issues/2157
   eventCategory: EventCategory | null
+  participantsCount: number
 }
 
 type GetAllEventsQueryParams = {
@@ -16,7 +17,7 @@ type GetAllEventsQueryParams = {
 }
 
 type GetAllEventsResponse = {
-  events: EventWithCategory[]
+  events: Event[]
 }
 
 type GetEventCategoriesQueryParams = {
@@ -37,11 +38,11 @@ type GetEventDetailPathParams = {
 }
 
 type GetEventDetailResponse = {
-  event: EventWithCategory
+  event: Event
 }
 
 export type {
-  EventWithCategory,
+  Event,
   GetAllEventsQueryParams,
   GetAllEventsResponse,
   GetEventCategoriesQueryParams,

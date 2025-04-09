@@ -20,6 +20,7 @@ type Event = {
   maxCapacity: number
   description: string
   eventCategory: EventCategory
+  participantsCount: number
 }
 
 type GetAllEventsQueryParams = {

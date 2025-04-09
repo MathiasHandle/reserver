@@ -1,12 +1,11 @@
-import type { EventWithCategory, GetAllEventsQueryParams } from '@/controllers/events/eventTypes'
+import type { Event, GetAllEventsQueryParams } from '@/controllers/events/eventTypes'
 import { eventCategoriesSchema } from '@/model/eventCategories'
 import { eventsSchema } from '@/model/events'
+import { userEventsSchema } from '@/model/userEvents'
 import { db } from '@/services/database'
-import { eq, getTableColumns } from 'drizzle-orm'
+import { eq, getTableColumns, sql } from 'drizzle-orm'
 
-async function getAllEvents(
-  options?: GetAllEventsQueryParams
-): Promise<EventWithCategory[] | undefined> {
+async function getAllEvents(options?: GetAllEventsQueryParams): Promise<Event[] | undefined> {
   const defaultOptions = {
     limit: 20,
     offset: 0,
@@ -21,14 +20,19 @@ async function getAllEvents(
     const eventCategory = getTableColumns(eventCategoriesSchema)
 
     const eventsData = await db
-      .select({ ...eventRest, eventCategory })
+      .select({
+        ...eventRest,
+        eventCategory,
+        participantsCount: sql<number>`(
+        SELECT COUNT(*) FROM ${userEventsSchema}
+        WHERE ${userEventsSchema.eventId} = ${eventsSchema.id}
+      )`.as('participantsCount'),
+      })
       .from(eventsSchema)
       .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
       .limit(limit)
       .offset(offset)
       .where(categoryIdFilter ? eq(eventsSchema.categoryId, categoryIdFilter) : undefined)
-
-    console.log(eventsData)
 
     return eventsData
   } catch (err) {

@@ -1,7 +1,8 @@
 import { eventCategoriesSchema } from '@/model/eventCategories'
 import { eventsSchema } from '@/model/events'
+import { userEventsSchema } from '@/model/userEvents'
 import { db } from '@/services/database'
-import { eq, getTableColumns } from 'drizzle-orm'
+import { eq, getTableColumns, sql } from 'drizzle-orm'
 
 async function getEventById(eventId: number) {
   try {
@@ -13,6 +14,10 @@ async function getEventById(eventId: number) {
       .select({
         ...eventDetail,
         eventCategory,
+        participantsCount: sql<number>`(
+          SELECT COUNT(*) FROM ${userEventsSchema}
+          WHERE ${userEventsSchema.eventId} = ${eventsSchema.id}
+        )`.as('participantsCount'),
       })
       .from(eventsSchema)
       .where(eq(eventsSchema.id, eventId))
