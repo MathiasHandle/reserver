@@ -42,8 +42,10 @@ const AppHeader = () => {
           </nav>
 
           <div>
-            {userData?.email ? (
-              <div className="font-bold">{userData.email}</div>
+            {userData ? (
+              <Link to={'/profile'} className="font-bold">
+                {userData.email}
+              </Link>
             ) : (
               <Button onClick={onLoginClick}>Login</Button>
             )}

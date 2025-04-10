@@ -11,12 +11,19 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ProfileImport } from './routes/profile'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as EventsIndexImport } from './routes/events/index'
-import { Route as EventsEventImport } from './routes/events/$event'
+import { Route as EventsEventIdImport } from './routes/events/$eventId'
 
 // Create/Update Routes
+
+const ProfileRoute = ProfileImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   id: '/about',
@@ -36,9 +43,9 @@ const EventsIndexRoute = EventsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const EventsEventRoute = EventsEventImport.update({
-  id: '/events/$event',
-  path: '/events/$event',
+const EventsEventIdRoute = EventsEventIdImport.update({
+  id: '/events/$eventId',
+  path: '/events/$eventId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,11 +67,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/events/$event': {
-      id: '/events/$event'
-      path: '/events/$event'
-      fullPath: '/events/$event'
-      preLoaderRoute: typeof EventsEventImport
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/events/$eventId': {
+      id: '/events/$eventId'
+      path: '/events/$eventId'
+      fullPath: '/events/$eventId'
+      preLoaderRoute: typeof EventsEventIdImport
       parentRoute: typeof rootRoute
     }
     '/events/': {
@@ -82,14 +96,16 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/events/$event': typeof EventsEventRoute
+  '/profile': typeof ProfileRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/events': typeof EventsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/events/$event': typeof EventsEventRoute
+  '/profile': typeof ProfileRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/events': typeof EventsIndexRoute
 }
 
@@ -97,30 +113,33 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/events/$event': typeof EventsEventRoute
+  '/profile': typeof ProfileRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/events/': typeof EventsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/events/$event' | '/events'
+  fullPaths: '/' | '/about' | '/profile' | '/events/$eventId' | '/events'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/events/$event' | '/events'
-  id: '__root__' | '/' | '/about' | '/events/$event' | '/events/'
+  to: '/' | '/about' | '/profile' | '/events/$eventId' | '/events'
+  id: '__root__' | '/' | '/about' | '/profile' | '/events/$eventId' | '/events/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  EventsEventRoute: typeof EventsEventRoute
+  ProfileRoute: typeof ProfileRoute
+  EventsEventIdRoute: typeof EventsEventIdRoute
   EventsIndexRoute: typeof EventsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  EventsEventRoute: EventsEventRoute,
+  ProfileRoute: ProfileRoute,
+  EventsEventIdRoute: EventsEventIdRoute,
   EventsIndexRoute: EventsIndexRoute,
 }
 
@@ -136,7 +155,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/events/$event",
+        "/profile",
+        "/events/$eventId",
         "/events/"
       ]
     },
@@ -146,8 +166,11 @@ export const routeTree = rootRoute
     "/about": {
       "filePath": "about.tsx"
     },
-    "/events/$event": {
-      "filePath": "events/$event.tsx"
+    "/profile": {
+      "filePath": "profile.tsx"
+    },
+    "/events/$eventId": {
+      "filePath": "events/$eventId.tsx"
     },
     "/events/": {
       "filePath": "events/index.tsx"
