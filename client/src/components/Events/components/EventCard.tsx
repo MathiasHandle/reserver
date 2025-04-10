@@ -16,7 +16,7 @@ function EventCard(props: EventCardProps) {
   return (
     <li>
       <Card className="h-full">
-        <Link to={id.toString()} className="grow-1">
+        <Link to="/events/$eventId" params={{ eventId: id.toString() }} className="grow-1">
           <CardContent>
             <div className="flex gap-4">
               <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-amber-400 sm:h-28 sm:w-28">
