@@ -7,6 +7,7 @@ function useCreateEvent() {
     mutationFn: api.events.createEvent,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.events.eventList() })
+      queryClient.invalidateQueries({ queryKey: queryKeys.events.userCreatedEvents() })
     },
   })
 }

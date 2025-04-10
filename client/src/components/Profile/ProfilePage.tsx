@@ -1,7 +1,7 @@
-import { useLogoutUser, useUser } from '@/hooks'
+import { useLogoutUser, useUser, useUserCreatedEvents } from '@/hooks'
 import useGetEventCategories from '@/hooks/api/useGetEventCategories'
 import { useRouter } from '@tanstack/react-router'
-import { EventForm } from '../Events/components'
+import { EventForm, EventList } from '../Events/components'
 import { UserDetail } from './components'
 
 // TODO make this route protected
@@ -16,6 +16,8 @@ function ProfilePage() {
 
   const { data: eventCategories } = useGetEventCategories()
 
+  const { data: createdEvents } = useUserCreatedEvents()
+
   return (
     <>
       <h1 className="mt-8 mb-4 text-center text-2xl font-bold">Profile</h1>
@@ -28,7 +30,14 @@ function ProfilePage() {
         {userData && <UserDetail userData={userData} onLogout={logoutUser} />}
       </aside>
 
-      <section></section>
+      <section>
+        <h2 className="font-lg mt-6 text-center font-bold">Your events</h2>
+        {createdEvents && !createdEvents.length && (
+          <div className="text-center">You didn't create any events :/ ... Try it!</div>
+        )}
+
+        {createdEvents && <EventList events={createdEvents} />}
+      </section>
     </>
   )
 }

@@ -25,6 +25,7 @@ TODO event detail page
   TODO go back to events button
 
 TODO create new event
+TODO move hooks/api into subfolders
 
 TODO profile page
   TODO ux - Lorem ipsum?
