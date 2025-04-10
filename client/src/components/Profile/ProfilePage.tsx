@@ -1,7 +1,8 @@
-import { Button } from '@/components/ui/button'
 import { useLogoutUser, useUser } from '@/hooks'
+import useGetEventCategories from '@/hooks/api/useGetEventCategories'
 import { useRouter } from '@tanstack/react-router'
-import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
+import { EventForm } from '../Events/components'
+import { UserDetail } from './components'
 
 // TODO make this route protected
 function ProfilePage() {
@@ -13,42 +14,18 @@ function ProfilePage() {
     router.navigate({ to: '/' })
   })
 
+  const { data: eventCategories } = useGetEventCategories()
+
   return (
     <>
       <h1 className="mt-8 mb-4 text-center text-2xl font-bold">Profile</h1>
 
+      <div className="mx-auto my-6 w-1/2">
+        {eventCategories && <EventForm eventCategories={eventCategories.categories} />}
+      </div>
+
       <aside className="m-auto w-fit">
-        {userData && (
-          <Card>
-            <CardHeader>
-              <h4></h4>
-            </CardHeader>
-
-            <CardContent>
-              <div>
-                <div>
-                  <b>Email:</b> {userData.email}
-                </div>
-                <div>
-                  <b>Name:</b> {userData.name}
-                </div>
-                <div>
-                  <b>Surname:</b> {userData.surname}
-                </div>
-              </div>
-            </CardContent>
-
-            <CardFooter>
-              <Button
-                variant={'destructive'}
-                onClick={() => logoutUser()}
-                className="mx-auto mt-4 font-bold"
-              >
-                Logout
-              </Button>
-            </CardFooter>
-          </Card>
-        )}
+        {userData && <UserDetail userData={userData} onLogout={logoutUser} />}
       </aside>
 
       <section></section>

@@ -1,3 +1,4 @@
+import createEvent from './events/createEvent'
 import getEventCategories from './events/getEventCategories'
 import getAllEvents from './events/getEvents'
 import createUser from './users/createUser'
@@ -17,6 +18,7 @@ const api = {
   events: {
     getAllEvents,
     getEventCategories,
+    createEvent,
   },
 }
 

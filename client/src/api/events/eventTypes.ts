@@ -55,7 +55,19 @@ type GetEventDetailResponse = {
   event: Event
 }
 
+type CreateEventRequestBody = {
+  name: string
+  date: string
+  maxCapacity: number
+  description: string
+  categoryId: number
+}
+
+type CreateEventResponse = Event
+
 export type {
+  CreateEventRequestBody,
+  CreateEventResponse,
   Event,
   EventCategoryWithEventCount,
   GetAllEventsQueryParams,

@@ -31,12 +31,14 @@ const formSchema = z.object({
     }),
 })
 
+type FormSchema = z.infer<typeof formSchema>
+
 type LoginFormProps = {
   onSuccess?: () => void
 }
 
 function LoginForm(props: LoginFormProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
@@ -46,9 +48,7 @@ function LoginForm(props: LoginFormProps) {
 
   const { mutate: loginUser } = useLogInUser()
 
-  type FormSchema = z.infer<typeof formSchema>
-
-  async function onSubmitFn(values: z.infer<typeof formSchema>) {
+  async function onSubmitFn(values: FormSchema) {
     loginUser(values, {
       onError: err => {
         // TODO better typing of error, ideal scenario would be to generate error type from API schema

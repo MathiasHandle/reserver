@@ -41,4 +41,5 @@ export type {
   GetUserResponse,
   LoginUserRequestBody,
   LoginUserResponse,
+  User,
 }

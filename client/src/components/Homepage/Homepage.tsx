@@ -1,5 +1,4 @@
 import { api } from '@/api'
-import { useLogoutUser } from '@/hooks'
 import { MainBanner } from './components'
 import TopCategories from './components/TopCategories'
 
@@ -13,12 +12,6 @@ function Homepage() {
     }
   }
 
-  const { mutate: logoutUser } = useLogoutUser()
-
-  function onLogout() {
-    logoutUser()
-  }
-
   return (
     <>
       <main className="container">
@@ -28,7 +21,6 @@ function Homepage() {
 
         <div className="mx-auto flex gap-6">
           <button onClick={onCheckUser}>Check user</button>
-          <button onClick={onLogout}>Logout</button>
         </div>
       </main>
     </>
