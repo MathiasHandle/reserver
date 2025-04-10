@@ -1,9 +1,11 @@
 import httpCodes from '@/constants/httpCodes'
 import { NotFoundError } from '@/services/error'
-import { getAllEvents, getEventById, getEventCategories } from '@/services/events'
-import type { TypedRequest } from '@/types/sharedTypes'
+import { createEvent, getAllEvents, getEventById, getEventCategories } from '@/services/events'
+import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
 import type {
+  CreateEventRequest,
+  CreateEventResponse,
   GetAllEventsQueryParams,
   GetAllEventsResponse,
   GetEventCategoriesQueryParams,
@@ -74,8 +76,25 @@ async function handleGetEventById(
   }
 }
 
+async function handleCreateEvent(
+  req: TypedRequest<EmptyObject, CreateEventRequest>,
+  res: Response<CreateEventResponse | ErrorResponse>
+) {
+  try {
+    const createdEvent = await createEvent(req.body)
+    const eventFullData = await getEventById(createdEvent.id)
+    if (!eventFullData) return
+
+    res.status(httpCodes.CREATED).json({ event: eventFullData })
+  } catch (err) {
+    console.log(err)
+    res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
+  }
+}
+
 export default {
   handleGetAllEvents,
   handleGetEventById,
   handleGetEventCategories,
+  handleCreateEvent,
 }

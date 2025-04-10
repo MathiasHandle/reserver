@@ -47,7 +47,7 @@ Server
 TODO check if all errors are handled properly
 TODO Request<...> -> TypedRequest<...>
 TODO remove console.logs
-
+TODO extract participantsCount to fn / query and reuse it
 
 
 

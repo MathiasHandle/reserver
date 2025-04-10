@@ -2,16 +2,16 @@ import type { Event } from '@/controllers/events/eventTypes'
 import { eventCategoriesSchema } from '@/model/eventCategories'
 import { eventsSchema } from '@/model/events'
 import { userEventsSchema } from '@/model/userEvents'
-import { db } from '@/services/database'
 import { eq, getTableColumns, sql } from 'drizzle-orm'
+import { db } from '../database'
 
-async function getEventById(eventId: number): Promise<Event | undefined> {
+async function getEventByName(eventName: string): Promise<Event | undefined> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { categoryId, ...eventDetail } = getTableColumns(eventsSchema)
     const eventCategory = getTableColumns(eventCategoriesSchema)
 
-    const eventData = await db
+    const event = await db
       .select({
         ...eventDetail,
         eventCategory,
@@ -21,14 +21,14 @@ async function getEventById(eventId: number): Promise<Event | undefined> {
         )`.as('participantsCount'),
       })
       .from(eventsSchema)
-      .where(eq(eventsSchema.id, eventId))
+      .where(eq(eventsSchema.name, eventName))
       .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
 
-    return eventData[0]
+    return event[0]
   } catch (err) {
-    console.log(err)
+    console.log('getEventByName: ', err)
     throw err
   }
 }
 
-export default getEventById
+export default getEventByName

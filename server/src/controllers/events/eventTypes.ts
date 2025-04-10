@@ -1,5 +1,5 @@
 import type { eventCategoriesSchema } from '@/model/eventCategories'
-import type { eventsSchema } from '@/model/events'
+import type { EventsInsert, eventsSchema } from '@/model/events'
 
 type EventCategory = typeof eventCategoriesSchema.$inferSelect
 
@@ -41,7 +41,17 @@ type GetEventDetailResponse = {
   event: Event
 }
 
+type CreateEventRequest = Omit<EventsInsert, 'categoryId'> & {
+  categoryId: number
+}
+
+type CreateEventResponse = {
+  event: Event
+}
+
 export type {
+  CreateEventRequest,
+  CreateEventResponse,
   Event,
   GetAllEventsQueryParams,
   GetAllEventsResponse,

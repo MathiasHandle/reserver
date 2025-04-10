@@ -77,6 +77,13 @@ router.get(
   eventsController.handleGetEventById
 )
 
+router.post(
+  `${eventsBaseUrl}`,
+  checkAuth,
+  eventsValidator.validateCreateEvent,
+  eventsController.handleCreateEvent
+)
+
 //#endregion
 
 export default router
