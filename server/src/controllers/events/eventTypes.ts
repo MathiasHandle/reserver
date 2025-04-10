@@ -49,6 +49,10 @@ type CreateEventResponse = {
   event: Event
 }
 
+type GetEventsByUserResponse = {
+  events: Event[]
+}
+
 export type {
   CreateEventRequest,
   CreateEventResponse,
@@ -59,4 +63,5 @@ export type {
   GetEventCategoriesResponse,
   GetEventDetailPathParams,
   GetEventDetailResponse,
+  GetEventsByUserResponse,
 }

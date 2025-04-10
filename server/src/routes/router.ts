@@ -63,6 +63,9 @@ const eventsBaseUrl = '/api/events'
 // Get all events
 router.get(eventsBaseUrl, eventsValidator.validateGetAllEvents, eventsController.handleGetAllEvents)
 
+// Get all events by user id
+router.get(`${eventsBaseUrl}/my-created`, checkAuth, eventsController.handleGetMyCreatedEvents)
+
 // Get event categories
 router.get(
   `${eventsBaseUrl}/categories`,

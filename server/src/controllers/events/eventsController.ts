@@ -1,6 +1,12 @@
 import httpCodes from '@/constants/httpCodes'
 import { NotFoundError } from '@/services/error'
-import { createEvent, getAllEvents, getEventById, getEventCategories } from '@/services/events'
+import {
+  createEvent,
+  getAllEvents,
+  getEventById,
+  getEventCategories,
+  getEventsByUser,
+} from '@/services/events'
 import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
 import type {
@@ -12,6 +18,7 @@ import type {
   GetEventCategoriesResponse,
   GetEventDetailPathParams,
   GetEventDetailResponse,
+  GetEventsByUserResponse,
 } from './eventTypes'
 
 type ErrorResponse = {
@@ -92,9 +99,28 @@ async function handleCreateEvent(
   }
 }
 
+async function handleGetMyCreatedEvents(
+  req: TypedRequest,
+  res: Response<GetEventsByUserResponse | ErrorResponse>
+) {
+  try {
+    // Shouldnt happen, because of auth middleware
+    const userId = req.session.user?.id
+    if (!userId) return
+
+    const events = await getEventsByUser(userId)
+
+    res.status(httpCodes.OK).json({ events: events ?? [] })
+  } catch (err) {
+    console.log(err)
+    res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
+  }
+}
+
 export default {
   handleGetAllEvents,
   handleGetEventById,
   handleGetEventCategories,
   handleCreateEvent,
+  handleGetMyCreatedEvents,
 }

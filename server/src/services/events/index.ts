@@ -4,6 +4,7 @@ import getEventById from './getEventById'
 import getEventByName from './getEventByName'
 import getEventCategories from './getEventCategories'
 import getEventCategoryById from './getEventCategoryById'
+import getEventsByUser from './getEventsByUser'
 
 export {
   createEvent,
@@ -12,4 +13,5 @@ export {
   getEventByName,
   getEventCategories,
   getEventCategoryById,
+  getEventsByUser,
 }
