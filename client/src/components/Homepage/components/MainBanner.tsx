@@ -1,6 +1,5 @@
 import ImgJPG from '@/assets/main-banner.jpg'
 import ImgWebp from '@/assets/main-banner.webp'
-import { LoginModal, RegistrationModal } from '@/components/Auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { useUser } from '@/hooks'
@@ -52,9 +51,6 @@ function MainBanner() {
           >
             Explore events
           </Button>
-
-          <RegistrationModal />
-          <LoginModal />
         </CardContent>
       </Card>
     </div>

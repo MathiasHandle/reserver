@@ -39,6 +39,8 @@ TODO remove console.logs
 
 TODO ghosts
 
+TODO close icons for modals
+
 Registration
 TODO close modal after sucessfull Registration
 TODO automatical sign in for user after registration

@@ -1,5 +1,6 @@
 import { AppFooter } from '@/components/AppFooter'
 import { AppHeader } from '@/components/AppHeader'
+import { GlobalModals } from '@/components/GlobalModals'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
@@ -15,6 +16,8 @@ export const Route = createRootRoute({
       </main>
 
       <AppFooter />
+
+      <GlobalModals />
 
       <TanStackRouterDevtools />
     </div>
