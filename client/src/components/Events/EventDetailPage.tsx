@@ -1,4 +1,4 @@
-import { useGetEventDetail } from '@/hooks'
+import { useGetEventDetail, useJoinEvent } from '@/hooks'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
 import EventCardFooter from './components/EventCardFooter'
@@ -10,11 +10,7 @@ type EventDetailPageProps = {
 
 function EventDetailPage({ eventId }: EventDetailPageProps) {
   const { data, isFetching } = useGetEventDetail(eventId)
-
-  function handleJoinClick(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault()
-    console.log('join clicked')
-  }
+  const { mutate: joinEvent } = useJoinEvent()
 
   return (
     <>
@@ -45,7 +41,7 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
                     className="mx-auto mt-6 block"
                     variant={'action'}
                     size={'lg'}
-                    onClick={handleJoinClick}
+                    onClick={() => joinEvent(eventId)}
                   >
                     Join
                   </Button>

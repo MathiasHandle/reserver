@@ -52,6 +52,8 @@ TODO extract participantsCount to fn / query and reuse it
 TODO change default type for TypedRequest -> TRequestBody to ApiEmptyRequestBody
 TODO change default type for TypedRequest -> TQueryParams to EmptyObject
 TODO new error for Internal server error (controllers)
+TODO use zod in ALL validators
+FIXME add notNull to userEvents schema
 
 
 

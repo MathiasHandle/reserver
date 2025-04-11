@@ -5,7 +5,9 @@ import {
   getAllEvents,
   getEventById,
   getEventCategories,
-  getEventsByUser,
+  getEventsCreatedByUser,
+  getJoinedEvents,
+  joinEvent,
 } from '@/services/events'
 import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
@@ -19,6 +21,9 @@ import type {
   GetEventDetailPathParams,
   GetEventDetailResponse,
   GetEventsByUserResponse,
+  GetJoinedEventsResponse,
+  JoinEventPathParams,
+  JoinEventResponse,
 } from './eventTypes'
 
 type ErrorResponse = {
@@ -108,7 +113,44 @@ async function handleGetMyCreatedEvents(
     const userId = req.session.user?.id
     if (!userId) return
 
-    const events = await getEventsByUser(userId)
+    const events = await getEventsCreatedByUser(userId)
+
+    res.status(httpCodes.OK).json({ events: events ?? [] })
+  } catch (err) {
+    console.log(err)
+    res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
+  }
+}
+
+async function handleJoinEvent(
+  req: TypedRequest<JoinEventPathParams>,
+  res: Response<JoinEventResponse | ErrorResponse>
+) {
+  try {
+    // Shouldnt happen, because of auth middleware
+    const userId = req.session.user?.id
+    if (!userId) return
+
+    await joinEvent(Number(req.params.eventId), userId)
+
+    res.status(httpCodes.OK).json({})
+  } catch (err) {
+    console.log(err)
+    res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
+  }
+}
+
+async function handleGetJoinedEvents(
+  req: Request,
+  res: Response<GetJoinedEventsResponse | ErrorResponse>
+) {
+  try {
+    console.log('handleGetJoinedEvents')
+
+    const userId = req.session.user?.id
+    if (!userId) return
+
+    const events = await getJoinedEvents(userId)
 
     res.status(httpCodes.OK).json({ events: events ?? [] })
   } catch (err) {
@@ -123,4 +165,6 @@ export default {
   handleGetEventCategories,
   handleCreateEvent,
   handleGetMyCreatedEvents,
+  handleJoinEvent,
+  handleGetJoinedEvents,
 }

@@ -73,6 +73,9 @@ router.get(
   eventsController.handleGetEventCategories
 )
 
+// Get events joined by user
+router.get(`${eventsBaseUrl}/my-joined`, checkAuth, eventsController.handleGetJoinedEvents)
+
 // Get event by id
 router.get(
   `${eventsBaseUrl}/:eventId`,
@@ -80,11 +83,21 @@ router.get(
   eventsController.handleGetEventById
 )
 
+// Create event
 router.post(
   `${eventsBaseUrl}`,
   checkAuth,
   eventsValidator.validateCreateEvent,
   eventsController.handleCreateEvent
+)
+
+// Join event
+router.post(
+  `${eventsBaseUrl}/join/:eventId`,
+  checkAuth,
+  eventsValidator.validateEventIdInPath,
+  eventsValidator.validateJoinEvent,
+  eventsController.handleJoinEvent
 )
 
 //#endregion

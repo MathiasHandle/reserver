@@ -1,12 +1,19 @@
-import { useLogoutUser, useUser, useUserCreatedEvents } from '@/hooks'
+import { useGetJoinedEvents, useLogoutUser, useUser, useUserCreatedEvents } from '@/hooks'
 import useGetEventCategories from '@/hooks/api/useGetEventCategories'
 import { useRouter } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 import { EventForm, EventList } from '../Events/components'
 import { UserDetail } from './components'
 
 // TODO make this route protected
 function ProfilePage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   const { data: userData } = useUser()
+
+  useEffect(() => {
+    userData?.id ? setIsLoggedIn(true) : setIsLoggedIn(false)
+  }, [userData])
 
   const router = useRouter()
 
@@ -17,6 +24,7 @@ function ProfilePage() {
   const { data: eventCategories } = useGetEventCategories()
 
   const { data: createdEvents } = useUserCreatedEvents()
+  const { data: joinedEvents } = useGetJoinedEvents(isLoggedIn)
 
   return (
     <>
@@ -37,6 +45,15 @@ function ProfilePage() {
         )}
 
         {createdEvents && <EventList events={createdEvents} />}
+      </section>
+
+      <section>
+        <h2 className="font-lg mt-6 text-center font-bold">Events you joined</h2>
+        {joinedEvents && !joinedEvents.length && (
+          <div className="text-center">You didn't join any events :/ ... Try it!</div>
+        )}
+
+        {joinedEvents && <EventList events={joinedEvents} />}
       </section>
     </>
   )

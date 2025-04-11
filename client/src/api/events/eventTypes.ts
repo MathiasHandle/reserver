@@ -1,3 +1,5 @@
+import { ApiEmptyResponse } from '@/services/fetch'
+
 type EventCategory = {
   id: number
   name:
@@ -69,6 +71,16 @@ type GetEventsByUserResponse = {
   events: Event[]
 }
 
+type JoinEventPathParams = {
+  eventId: number
+}
+
+type JoinEventResponse = ApiEmptyResponse
+
+type GetJoinedEventsResponse = {
+  events: Event[]
+}
+
 export type {
   CreateEventRequestBody,
   CreateEventResponse,
@@ -81,4 +93,7 @@ export type {
   GetEventDetailPathParams,
   GetEventDetailResponse,
   GetEventsByUserResponse,
+  GetJoinedEventsResponse,
+  JoinEventPathParams,
+  JoinEventResponse,
 }

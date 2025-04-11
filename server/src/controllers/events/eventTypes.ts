@@ -1,5 +1,6 @@
 import type { eventCategoriesSchema } from '@/model/eventCategories'
 import type { EventsInsert, eventsSchema } from '@/model/events'
+import type { APIEmptyResponse } from '@/types/sharedTypes'
 
 type EventCategory = typeof eventCategoriesSchema.$inferSelect
 
@@ -53,6 +54,16 @@ type GetEventsByUserResponse = {
   events: Event[]
 }
 
+type JoinEventPathParams = {
+  eventId: string
+}
+
+type JoinEventResponse = APIEmptyResponse
+
+type GetJoinedEventsResponse = {
+  events: Event[]
+}
+
 export type {
   CreateEventRequest,
   CreateEventResponse,
@@ -64,4 +75,7 @@ export type {
   GetEventDetailPathParams,
   GetEventDetailResponse,
   GetEventsByUserResponse,
+  GetJoinedEventsResponse,
+  JoinEventPathParams,
+  JoinEventResponse,
 }

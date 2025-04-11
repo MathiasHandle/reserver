@@ -2,10 +2,11 @@ import type { Event } from '@/controllers/events/eventTypes'
 import { eventCategoriesSchema } from '@/model/eventCategories'
 import { eventsSchema } from '@/model/events'
 import { userEventsSchema } from '@/model/userEvents'
+import { usersSchema } from '@/model/users'
 import { eq, getTableColumns, sql } from 'drizzle-orm'
 import { db } from '../database'
 
-async function getEventsByUser(userId: number): Promise<Event[] | undefined> {
+async function getJoinedEvents(userId: number): Promise<Event[] | undefined> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { categoryId, ...event } = getTableColumns(eventsSchema)
@@ -20,15 +21,31 @@ async function getEventsByUser(userId: number): Promise<Event[] | undefined> {
           WHERE ${userEventsSchema.eventId} = ${eventsSchema.id}
         )`.as('participantsCount'),
       })
-      .from(eventsSchema)
-      .where(eq(eventsSchema.hostId, userId))
-      .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
+      .from(userEventsSchema)
+      .leftJoin(usersSchema, eq(usersSchema.id, userEventsSchema.participantId))
+      .leftJoin(eventsSchema, eq(eventsSchema.id, userEventsSchema.eventId))
+      .leftJoin(eventCategoriesSchema, eq(eventCategoriesSchema.id, eventsSchema.categoryId))
+      .where(eq(usersSchema.id, userId))
 
+    // FIXME find out why its infering properties as nullable
+    //@ts-expect-error fix this later
     return events
   } catch (err) {
-    console.log('getEventsByUser: ', err)
+    console.log('getJoinedEvents: ', err)
     throw err
   }
 }
 
-export default getEventsByUser
+/* 
+SELECT
+  *
+FROM
+  user_events
+  LEFT JOIN users ON users.id = user_events.participant_id
+  LEFT JOIN events ON events.id = user_events.event_id
+  LEFT JOIN event_categories ON event_categories.id = events.category_id
+WHERE
+  users.id = 2;
+*/
+
+export default getJoinedEvents
