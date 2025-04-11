@@ -25,6 +25,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import type { ControllerRenderProps } from 'react-hook-form'
+
 const formSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters long').max(100, 'Name is too long'),
   date: z.string().datetime('Invalid date format'),
@@ -65,7 +67,7 @@ function EventForm(props: EventFormProps) {
 
   const [date, setDate] = useState<Date | undefined>(undefined)
 
-  function onDateChange(date: Date | undefined, onFieldChange: (...event: any[]) => void) {
+  function onDateChange(date: Date | undefined, onFieldChange: ControllerRenderProps['onChange']) {
     setDate(date)
     onFieldChange(date?.toISOString())
   }

@@ -5,7 +5,7 @@ import TopCategory from './TopCategory'
 function TopCategories() {
   const limit = 6
 
-  const { data, isFetching } = useGetEventCategories({
+  const { data: categories, isFetching } = useGetEventCategories({
     limit,
     sort: 'desc',
   })
@@ -20,9 +20,9 @@ function TopCategories() {
         </div>
       )}
 
-      {data?.categories && (
+      {categories && (
         <div className="grid grid-cols-2 gap-2 px-4 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-4 sm:px-0 md:gap-x-8">
-          {data.categories.map(category => (
+          {categories.map(category => (
             <TopCategory category={category} key={category.id} />
           ))}
         </div>

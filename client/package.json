@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "check:ts": "tsc --noEmit -p tsconfig.app.json",
-    "check:ts": "tsc --noEmit -p tsconfig.app.json",
+    "check:lint": "eslint",
+    "check:lint-fix": "eslint --fix",
     "check:prettier": "prettier . --config ./.prettierrc --check",
     "check:prettier-fix": "prettier . --config ./.prettierrc --write",
     "dev": "vite",

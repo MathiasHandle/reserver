@@ -38,7 +38,7 @@ DONE footer
 
 TODO remove console.logs
 
-TODO ghosts
+TODO ghosts -> separate components
 
 TODO close icons for modals
 

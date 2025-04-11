@@ -12,7 +12,11 @@ function ProfilePage() {
   const { data: userData } = useUser()
 
   useEffect(() => {
-    userData?.id ? setIsLoggedIn(true) : setIsLoggedIn(false)
+    if (userData?.id) {
+      setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
+    }
   }, [userData])
 
   const router = useRouter()
@@ -31,7 +35,7 @@ function ProfilePage() {
       <h1 className="mt-8 mb-4 text-center text-2xl font-bold">Profile</h1>
 
       <div className="mx-auto my-6 w-1/2">
-        {eventCategories && <EventForm eventCategories={eventCategories.categories} />}
+        {eventCategories && <EventForm eventCategories={eventCategories} />}
       </div>
 
       <aside className="m-auto w-fit">

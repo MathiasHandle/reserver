@@ -7,7 +7,7 @@ function useGetEventCategories(options?: GetEventCategoriesQueryParams) {
   return useQuery({
     queryKey: queryKeys.events.eventCategories(options),
     queryFn: () => api.events.getEventCategories(options),
-    select: data => data.data,
+    select: data => data.data.categories,
   })
 }
 

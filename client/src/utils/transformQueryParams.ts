@@ -19,7 +19,7 @@ function transformQueryParams(queryParams: Record<string, string | number | bool
     const queryString = `?${searchParams.toString()}`
 
     return queryString
-  } catch (err) {
+  } catch {
     throw new Error('Query parameters must be an object')
   }
 }

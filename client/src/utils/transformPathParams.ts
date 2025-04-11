@@ -16,7 +16,7 @@ function transformPathParams(pathParams: Record<string, string | number | boolea
 
     // Join the values with '/' and prepend a '/'
     pathString = paramValues.length > 0 ? `/${paramValues.join('/')}` : ''
-  } catch (err) {
+  } catch {
     throw new Error('Path parameters must be an object')
   }
 
