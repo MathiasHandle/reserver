@@ -1,7 +1,7 @@
 import { ApiError } from '@/services/fetch/apiTypes'
 import { queryClient, queryKeys } from '@/services/reactQuery'
 import { useEffect } from 'react'
-import useGetUser from './api/useGetUser'
+import useGetUser from './api/user/useGetUser'
 
 function useUser() {
   const { data, error } = useGetUser()

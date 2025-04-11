@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton'
-import useGetEventCategories from '@/hooks/api/useGetEventCategories'
+import useGetEventCategories from '@/hooks/api/events/useGetEventCategories'
 import TopCategory from './TopCategory'
 
 function TopCategories() {

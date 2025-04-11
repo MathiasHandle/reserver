@@ -1,5 +1,5 @@
 import { useGetJoinedEvents, useLogoutUser, useUser, useUserCreatedEvents } from '@/hooks'
-import useGetEventCategories from '@/hooks/api/useGetEventCategories'
+import useGetEventCategories from '@/hooks/api/events/useGetEventCategories'
 import { useRouter } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { EventForm, EventList } from '../Events/components'

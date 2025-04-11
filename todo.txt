@@ -23,6 +23,7 @@ TODO event detail page
   TODO if user is not logged in -> open login modal
   TODO if user already joined -> display different text in button
   TODO go back to events button
+  TODO update event
 
 TODO create new event
 TODO move hooks/api into subfolders
@@ -56,6 +57,7 @@ TODO change default type for TypedRequest -> TQueryParams to EmptyObject
 TODO new error for Internal server error (controllers)
 TODO use zod in ALL validators
 FIXME add notNull to userEvents schema
+FIXME eventParticipants shouldnt count host of the event as a participant
 
 
 
