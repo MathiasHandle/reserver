@@ -29,6 +29,8 @@ type GetAllEventsQueryParams = {
   limit?: number
   offset?: number
   categoryId?: number
+  // sorting by participants count
+  sort?: 'asc' | 'desc'
 }
 
 type GetAllEventsResponse = {
@@ -85,6 +87,7 @@ export type {
   CreateEventRequestBody,
   CreateEventResponse,
   Event,
+  EventCategory,
   EventCategoryWithEventCount,
   GetAllEventsQueryParams,
   GetAllEventsResponse,

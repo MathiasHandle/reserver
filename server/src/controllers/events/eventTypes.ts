@@ -15,6 +15,7 @@ type GetAllEventsQueryParams = {
   limit?: number
   offset?: number
   categoryId?: number
+  sort?: 'asc' | 'desc'
 }
 
 type GetAllEventsResponse = {

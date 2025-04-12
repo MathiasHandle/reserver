@@ -1,4 +1,4 @@
-import { GetEventCategoriesQueryParams } from '@/api/events/eventTypes'
+import { GetAllEventsQueryParams, GetEventCategoriesQueryParams } from '@/api/events/eventTypes'
 
 const queryKeys = {
   users: {
@@ -10,7 +10,8 @@ const queryKeys = {
   events: {
     all: () => ['events'] as const,
 
-    eventList: () => [...queryKeys.events.all(), 'list'] as const,
+    eventList: (options?: GetAllEventsQueryParams) =>
+      [...queryKeys.events.all(), 'list', options] as const,
 
     userCreatedEvents: () => [...queryKeys.events.all(), 'my-created'] as const,
 

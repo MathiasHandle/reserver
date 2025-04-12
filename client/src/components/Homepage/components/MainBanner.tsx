@@ -16,7 +16,7 @@ function MainBanner() {
 
   function handleJoinUsClick() {
     if (userData?.email) {
-      router.navigate({ to: '/events' })
+      router.navigate({ to: '/events', search: { categoryId: -1, sort: 'desc' } })
       return
     }
 

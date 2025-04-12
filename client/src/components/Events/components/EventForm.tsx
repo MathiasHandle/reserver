@@ -117,7 +117,7 @@ function EventForm(props: EventFormProps) {
                 <FormLabel>Event category</FormLabel>
 
                 <FormControl>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                 </FormControl>

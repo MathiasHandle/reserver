@@ -3,16 +3,17 @@ import { eventCategoriesSchema } from '@/model/eventCategories'
 import { eventsSchema } from '@/model/events'
 import { userEventsSchema } from '@/model/userEvents'
 import { db } from '@/services/database'
-import { eq, getTableColumns, sql } from 'drizzle-orm'
+import { asc, desc, eq, getTableColumns, sql } from 'drizzle-orm'
 
 async function getAllEvents(options?: GetAllEventsQueryParams): Promise<Event[] | undefined> {
   const defaultOptions = {
     limit: 20,
     offset: 0,
     categoryId: undefined,
+    sort: 'desc',
   }
 
-  const { limit, offset, categoryId: categoryIdFilter } = { ...defaultOptions, ...options }
+  const { limit, offset, categoryId: categoryIdFilter, sort } = { ...defaultOptions, ...options }
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,6 +34,7 @@ async function getAllEvents(options?: GetAllEventsQueryParams): Promise<Event[] 
       .limit(limit)
       .offset(offset)
       .where(categoryIdFilter ? eq(eventsSchema.categoryId, categoryIdFilter) : undefined)
+      .orderBy(sort === 'asc' ? asc(sql`participantsCount`) : desc(sql`participantsCount`))
 
     return eventsData
   } catch (err) {

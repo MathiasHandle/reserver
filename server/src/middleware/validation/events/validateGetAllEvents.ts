@@ -8,7 +8,7 @@ const validateEventQueryParams = (
   _res: Response,
   next: NextFunction
 ) => {
-  const { limit, offset, categoryId } = req.query
+  const { limit, offset, categoryId, sort } = req.query
 
   // Create an object to store converted values
   // query params are strings by default
@@ -76,6 +76,20 @@ const validateEventQueryParams = (
     }
 
     convertedQuery.categoryId = categoryIdNum
+  }
+
+  // Validate and convert sort
+  if (sort) {
+    if (sort !== 'asc' && sort !== 'desc') {
+      return next(
+        new ValidationError({
+          message: 'Sort must be either "asc" or "desc"',
+          detail: null,
+        })
+      )
+    }
+
+    convertedQuery.sort = sort
   }
 
   // Replace the original query string values with converted numeric values
