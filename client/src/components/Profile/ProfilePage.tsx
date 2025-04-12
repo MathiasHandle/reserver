@@ -1,23 +1,12 @@
 import { useGetJoinedEvents, useLogoutUser, useUser, useUserCreatedEvents } from '@/hooks'
 import useGetEventCategories from '@/hooks/api/events/useGetEventCategories'
 import { useRouter } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
 import { EventForm, EventList, EventListGhost } from '../Events'
 import { UserDetail } from './components'
 
 // TODO make this route protected
 function ProfilePage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  const { data: userData } = useUser()
-
-  useEffect(() => {
-    if (userData?.id) {
-      setIsLoggedIn(true)
-    } else {
-      setIsLoggedIn(false)
-    }
-  }, [userData])
+  const { data: user } = useUser()
 
   const router = useRouter()
 
@@ -27,8 +16,8 @@ function ProfilePage() {
 
   const { data: eventCategories } = useGetEventCategories()
 
-  const { data: createdEvents, isFetching: isFetchingCreatedEvents } = useUserCreatedEvents()
-  const { data: joinedEvents, isFetching: isFetchingJoinedEvents } = useGetJoinedEvents(isLoggedIn)
+  const { data: createdEvents, isFetching: isFetchingCreatedEvents } = useUserCreatedEvents(!!user)
+  const { data: joinedEvents, isFetching: isFetchingJoinedEvents } = useGetJoinedEvents(!!user)
 
   return (
     <>
@@ -36,7 +25,7 @@ function ProfilePage() {
 
       <div className="my-8 flex flex-col gap-6">
         <section className="m-auto flex w-fit flex-col items-start gap-6 sm:w-full sm:flex-row sm:justify-center">
-          {userData && <UserDetail userData={userData} onLogout={logoutUser} />}
+          {user && <UserDetail userData={user} onLogout={logoutUser} />}
 
           {eventCategories && (
             <div className="w-full sm:w-1/2">

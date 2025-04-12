@@ -1,4 +1,10 @@
-import { useGetEventDetail, useJoinEvent } from '@/hooks'
+import {
+  useGetEventDetail,
+  useGetJoinedEvents,
+  useJoinEvent,
+  useUser,
+  useUserCreatedEvents,
+} from '@/hooks'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
 import EventCardFooter from './components/EventCardFooter'
@@ -11,6 +17,13 @@ type EventDetailPageProps = {
 function EventDetailPage({ eventId }: EventDetailPageProps) {
   const { data, isFetching } = useGetEventDetail(eventId)
   const { mutate: joinEvent } = useJoinEvent()
+
+  const { data: user } = useUser()
+  const { data: joinedEvents } = useGetJoinedEvents(!!user)
+  const { data: createdEvents } = useUserCreatedEvents(!!user)
+
+  const isJoined = joinedEvents?.some(event => event.id === eventId)
+  const isOwner = createdEvents?.some(event => event.id === eventId)
 
   return (
     <>
@@ -40,10 +53,13 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
                   <Button
                     className="mx-auto mt-6 block"
                     variant={'action'}
+                    disabled={isJoined || isOwner}
                     size={'lg'}
                     onClick={() => joinEvent(eventId)}
                   >
-                    Join
+                    {isOwner && 'You created this event'}
+                    {isJoined && 'Joined'}
+                    {!isJoined && !isOwner && 'Join'}
                   </Button>
                 </div>
               </CardContent>
