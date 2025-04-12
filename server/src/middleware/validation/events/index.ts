@@ -1,4 +1,5 @@
 import validateCreateEvent from './validateCreateEvent'
+import validateEditEvent from './validateEditEvent'
 import validateEventIdInPath from './validateEventIdInPath'
 import validateGetAllEvents from './validateGetAllEvents'
 import validateGetEventDetail from './validateGetEventDetail'
@@ -12,6 +13,7 @@ const eventsValidator = {
   validateCreateEvent,
   validateEventIdInPath,
   validateJoinEvent,
+  validateEditEvent,
 }
 
 export default eventsValidator

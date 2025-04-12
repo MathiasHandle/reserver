@@ -11,6 +11,8 @@ type Event = Omit<typeof eventsSchema.$inferSelect, 'categoryId'> & {
   participantsCount: number
 }
 
+type EventInsert = typeof eventsSchema.$inferInsert
+
 type GetAllEventsQueryParams = {
   limit?: number
   offset?: number
@@ -65,9 +67,20 @@ type GetJoinedEventsResponse = {
   events: Event[]
 }
 
+type EditEventPathParams = {
+  eventId: string
+}
+
+type EditEventRequest = Omit<EventInsert, 'hostId' | 'id' | 'categoryId'> & {
+  id: number
+  categoryId: number
+}
+
 export type {
   CreateEventRequest,
   CreateEventResponse,
+  EditEventPathParams,
+  EditEventRequest,
   Event,
   GetAllEventsQueryParams,
   GetAllEventsResponse,

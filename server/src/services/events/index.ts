@@ -1,4 +1,5 @@
 import createEvent from './createEvent'
+import editEvent from './editEvent'
 import getAllEvents from './getAllEvents'
 import getEventById from './getEventById'
 import getEventByName from './getEventByName'
@@ -11,6 +12,7 @@ import joinEvent from './joinEvent'
 
 export {
   createEvent,
+  editEvent,
   getAllEvents,
   getEventById,
   getEventByName,

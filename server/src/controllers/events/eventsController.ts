@@ -2,6 +2,7 @@ import httpCodes from '@/constants/httpCodes'
 import { NotFoundError } from '@/services/error'
 import {
   createEvent,
+  editEvent,
   getAllEvents,
   getEventById,
   getEventCategories,
@@ -9,11 +10,13 @@ import {
   getJoinedEvents,
   joinEvent,
 } from '@/services/events'
-import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
+import type { APIEmptyResponse, EmptyObject, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
 import type {
   CreateEventRequest,
   CreateEventResponse,
+  EditEventPathParams,
+  EditEventRequest,
   GetAllEventsQueryParams,
   GetAllEventsResponse,
   GetEventCategoriesQueryParams,
@@ -145,14 +148,26 @@ async function handleGetJoinedEvents(
   res: Response<GetJoinedEventsResponse | ErrorResponse>
 ) {
   try {
-    console.log('handleGetJoinedEvents')
-
     const userId = req.session.user?.id
     if (!userId) return
 
     const events = await getJoinedEvents(userId)
 
     res.status(httpCodes.OK).json({ events: events ?? [] })
+  } catch (err) {
+    console.log(err)
+    res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
+  }
+}
+
+async function handleEditEvent(
+  req: TypedRequest<EditEventPathParams, EditEventRequest>,
+  res: Response<APIEmptyResponse | ErrorResponse>
+) {
+  try {
+    await editEvent(req.body)
+
+    res.status(httpCodes.OK).json({})
   } catch (err) {
     console.log(err)
     res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
@@ -167,4 +182,5 @@ export default {
   handleGetMyCreatedEvents,
   handleJoinEvent,
   handleGetJoinedEvents,
+  handleEditEvent,
 }

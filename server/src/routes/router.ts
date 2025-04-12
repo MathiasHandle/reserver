@@ -83,6 +83,15 @@ router.get(
   eventsController.handleGetEventById
 )
 
+// Edit event
+router.put(
+  `${eventsBaseUrl}/:eventId`,
+  checkAuth,
+  eventsValidator.validateEventIdInPath,
+  eventsValidator.validateEditEvent,
+  eventsController.handleEditEvent
+)
+
 // Create event
 router.post(
   `${eventsBaseUrl}`,

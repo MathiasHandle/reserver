@@ -24,6 +24,8 @@ TODO event detail page
   TODO if user already joined -> display different text in button
   TODO go back to events button
   TODO update event
+    FIXME cannot change time
+    TODO close popup onSuccess
 
 TODO create new event
 TODO move hooks/api into subfolders
