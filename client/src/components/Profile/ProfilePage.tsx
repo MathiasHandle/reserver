@@ -2,7 +2,7 @@ import { useGetJoinedEvents, useLogoutUser, useUser, useUserCreatedEvents } from
 import useGetEventCategories from '@/hooks/api/events/useGetEventCategories'
 import { useRouter } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { EventForm, EventList } from '../Events/components'
+import { EventForm, EventList, EventListGhost } from '../Events'
 import { UserDetail } from './components'
 
 // TODO make this route protected
@@ -27,38 +27,46 @@ function ProfilePage() {
 
   const { data: eventCategories } = useGetEventCategories()
 
-  const { data: createdEvents } = useUserCreatedEvents()
-  const { data: joinedEvents } = useGetJoinedEvents(isLoggedIn)
+  const { data: createdEvents, isFetching: isFetchingCreatedEvents } = useUserCreatedEvents()
+  const { data: joinedEvents, isFetching: isFetchingJoinedEvents } = useGetJoinedEvents(isLoggedIn)
 
   return (
     <>
       <h1 className="mt-8 mb-4 text-center text-2xl font-bold">Profile</h1>
 
-      <div className="mx-auto my-6 w-1/2">
-        {eventCategories && <EventForm eventCategories={eventCategories} />}
+      <div className="my-8 flex flex-col gap-6">
+        <section className="m-auto flex w-fit flex-col items-start gap-6 sm:w-full sm:flex-row sm:justify-center">
+          {userData && <UserDetail userData={userData} onLogout={logoutUser} />}
+
+          {eventCategories && (
+            <div className="w-full sm:w-1/2">
+              <EventForm eventCategories={eventCategories} />
+            </div>
+          )}
+        </section>
+
+        <section>
+          <h2 className="mb-4 text-center text-2xl font-bold">Events you've created</h2>
+          {isFetchingCreatedEvents && !createdEvents && <EventListGhost numberOfEvents={3} />}
+
+          {!isFetchingCreatedEvents && !createdEvents?.length && (
+            <div className="text-center">You didn't create any events :/ ... Try it!</div>
+          )}
+
+          {createdEvents?.length && <EventList events={createdEvents} />}
+        </section>
+
+        <section>
+          <h2 className="mb-4 text-center text-2xl font-bold">Events you've joined</h2>
+          {isFetchingJoinedEvents && !joinedEvents && <EventListGhost numberOfEvents={3} />}
+
+          {!isFetchingJoinedEvents && !joinedEvents?.length && (
+            <div className="text-center">You didn't join any events :/ ... Try it!</div>
+          )}
+
+          {joinedEvents?.length && <EventList events={joinedEvents} />}
+        </section>
       </div>
-
-      <aside className="m-auto w-fit">
-        {userData && <UserDetail userData={userData} onLogout={logoutUser} />}
-      </aside>
-
-      <section>
-        <h2 className="font-lg mt-6 text-center font-bold">Your events</h2>
-        {createdEvents && !createdEvents.length && (
-          <div className="text-center">You didn't create any events :/ ... Try it!</div>
-        )}
-
-        {createdEvents && <EventList events={createdEvents} />}
-      </section>
-
-      <section>
-        <h2 className="font-lg mt-6 text-center font-bold">Events you joined</h2>
-        {joinedEvents && !joinedEvents.length && (
-          <div className="text-center">You didn't join any events :/ ... Try it!</div>
-        )}
-
-        {joinedEvents && <EventList events={joinedEvents} />}
-      </section>
     </>
   )
 }

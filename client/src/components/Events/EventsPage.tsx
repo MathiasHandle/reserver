@@ -4,9 +4,10 @@ import CoverPhotoWEBP from '@/assets/events-list-cover.webp'
 import { useGetEvents } from '@/hooks'
 import { EventsPageSearchParams } from '@/routes/events'
 import { useState } from 'react'
-import { Skeleton } from '../ui/skeleton'
-import { EventList } from './components'
+
 import EventFilters from './components/EventFilters'
+import EventList from './EventList'
+import EventListGhost from './EventListGhost'
 
 type EventsPageProps = {
   searchParams: EventsPageSearchParams
@@ -40,13 +41,7 @@ function EventsPage(props: EventsPageProps) {
           <EventFilters searchParams={props.searchParams} updateFilters={setFilters} />
         </div>
 
-        {isFetchingEvents && !events && (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {Array.from({ length: 12 }).map((_, index) => (
-              <Skeleton className="h-40" key={index} />
-            ))}
-          </div>
-        )}
+        {isFetchingEvents && !events && <EventListGhost numberOfEvents={12} />}
 
         {events && <EventList events={events.events} />}
       </section>

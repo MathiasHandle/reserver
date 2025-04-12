@@ -1,5 +1,5 @@
 import { Event } from '@/api/events/eventTypes'
-import EventCard from './EventCard'
+import { EventCard } from './components'
 
 type EventListProps = {
   events: Event[]
