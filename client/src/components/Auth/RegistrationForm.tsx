@@ -60,7 +60,11 @@ const formSchema = z
     path: ['confirmPassword'],
   })
 
-function RegistrationForm() {
+type RegistrationFormProps = {
+  onSuccess?: () => void
+}
+
+function RegistrationForm(props: RegistrationFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -79,7 +83,6 @@ function RegistrationForm() {
   async function onSubmitFn(values: z.infer<typeof formSchema>) {
     createUser(values, {
       onError: err => {
-        // TODO better typing of error, ideal scenario would be to generate error type from API schema
         // Set errors from response
         if (err instanceof ApiError) {
           const entries = Object.entries<keyof FormSchema>(err.detail.detail)
@@ -91,6 +94,7 @@ function RegistrationForm() {
       },
       onSuccess: () => {
         // TODO set user in query client & refetch user detail
+        props.onSuccess?.()
       },
     })
   }

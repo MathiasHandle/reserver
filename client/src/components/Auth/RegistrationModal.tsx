@@ -1,53 +1,49 @@
+import { Dialog, DialogContent, DialogPortal, DialogTitle } from '@/components/ui/dialog'
 import { useStore } from '@/store'
-import { Dialog, DialogContent, DialogPortal, DialogTitle } from '@radix-ui/react-dialog'
 import { Card, CardContent, CardHeader } from '../ui/card'
-import { DialogClose } from '../ui/dialog'
 import RegistrationForm from './RegistrationForm'
 
 function RegistrationModal() {
   const modals = useStore(state => state.modals)
   const setModal = useStore(state => state.setModal)
 
-  function toggleModal() {
-    setModal('registration', { isOpen: !modals.registration.isOpen })
+  function switchModals() {
+    setModal('login', { isOpen: true })
+    setModal('registration', { isOpen: false })
   }
 
   return (
-    <>
-      {/* TODO add backdrop variable for all dialogs / drawers */}
-      <Dialog open={modals.registration.isOpen} onOpenChange={toggleModal}>
-        <DialogPortal>
-          <DialogTitle className="sr-only">Registration form</DialogTitle>
+    <Dialog
+      modal
+      open={modals.registration.isOpen}
+      onOpenChange={(isOpen: boolean) => setModal('registration', { isOpen })}
+    >
+      <DialogPortal>
+        <DialogTitle className="sr-only">Registration form</DialogTitle>
 
-          <DialogContent>
-            <div className="absolute top-0 left-0 z-50 min-h-full w-full sm:top-20 sm:left-1/2 sm:min-h-0 sm:max-w-[500px] sm:-translate-x-1/2">
-              <Card className="min-h-dvh rounded-none sm:min-h-0 sm:rounded-xl sm:px-20">
-                <CardHeader className="relative text-center text-3xl font-bold">
-                  <h2>Registration</h2>
+        <DialogContent className="rounded-xl p-0">
+          <Card className="min-h-dvh rounded-none sm:min-h-0 sm:rounded-xl sm:px-20">
+            <CardHeader className="relative text-center text-3xl font-bold">
+              <h2>Registration</h2>
+            </CardHeader>
 
-                  {/* TODO replace with icon */}
-                  <DialogClose className="absolute top-0 right-0">close</DialogClose>
-                </CardHeader>
+            <CardContent>
+              <RegistrationForm onSuccess={() => setModal('registration', { isOpen: false })} />
 
-                <CardContent>
-                  <RegistrationForm />
-
-                  <div className="mt-8 text-center sm:mt-4">
-                    Already have an account?
-                    <span
-                      className="ml-1 cursor-pointer font-bold hover:underline"
-                      onClick={() => setModal('login', { isOpen: true, resetModals: true })}
-                    >
-                      Log in
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </DialogContent>
-        </DialogPortal>
-      </Dialog>
-    </>
+              <div className="mt-8 text-center sm:mt-4">
+                Already have an account?
+                <span
+                  className="ml-1 cursor-pointer font-bold hover:underline"
+                  onClick={switchModals}
+                >
+                  Log in
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </DialogContent>
+      </DialogPortal>
+    </Dialog>
   )
 }
 

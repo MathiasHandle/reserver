@@ -17,7 +17,7 @@ function EventFormModal(props: EventFormModalProps) {
       <DialogPortal>
         <DialogTitle className="sr-only">Edit event form</DialogTitle>
 
-        <DialogContent className="rounded-xl p-0">
+        <DialogContent className="min-h-dvh rounded-none p-0 sm:min-h-0 sm:rounded-xl">
           {eventCategories && (
             <EventForm
               eventCategories={eventCategories}

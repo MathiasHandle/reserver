@@ -1,4 +1,3 @@
-import { cloneDeep } from 'es-toolkit'
 import { create } from 'zustand'
 
 type ModalOptions = {
@@ -17,7 +16,6 @@ type SetModalPayload = ModalOptions & {
 
 type StoreActions = {
   setModal: (modal: ModalNames, payload: SetModalPayload) => void
-  resetModals: () => void
 }
 
 const modalInitialValues = {
@@ -31,21 +29,14 @@ const modalInitialValues = {
 
 type ModalNames = keyof typeof modalInitialValues
 
-const useStore = create<StoreState & StoreActions>((set, get) => ({
+const useStore = create<StoreState & StoreActions>(set => ({
   modals: modalInitialValues,
 
   setModal: (modalName, payload) => {
-    if (payload.resetModals) {
-      get().resetModals()
-    }
-
     set(state => ({
       modals: { ...state.modals, [modalName]: { ...payload } },
     }))
   },
-
-  resetModals: () =>
-    set(() => ({ modals: cloneDeep<typeof modalInitialValues>(modalInitialValues) })),
 }))
 
 export default useStore

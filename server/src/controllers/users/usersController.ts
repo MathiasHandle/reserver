@@ -70,7 +70,7 @@ async function handleCreateUser(
   try {
     await createUser(req.body)
 
-    res.status(httpCodes.CREATED).json()
+    res.status(httpCodes.CREATED).json({})
   } catch (err) {
     next(err)
   }

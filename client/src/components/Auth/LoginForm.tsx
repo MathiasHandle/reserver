@@ -51,7 +51,6 @@ function LoginForm(props: LoginFormProps) {
   async function onSubmitFn(values: FormSchema) {
     loginUser(values, {
       onError: err => {
-        // TODO better typing of error, ideal scenario would be to generate error type from API schema
         // Set errors from response
         if (err instanceof ApiError) {
           // Access the shape of the Zod schema to get the keys

@@ -94,9 +94,11 @@ function EventForm(props: EventFormProps) {
   }
 
   return (
-    <Card className="w-full">
+    <Card className="w-full rounded-none sm:rounded-xl">
       <CardHeader>
-        <h2 className="text-center text-lg font-bold">Create event</h2>
+        <h2 className="text-center text-lg font-bold">
+          {isEditMode ? 'Edit event' : 'Create event'}
+        </h2>
       </CardHeader>
 
       <CardContent>
