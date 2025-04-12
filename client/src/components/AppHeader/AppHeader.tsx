@@ -1,5 +1,6 @@
 import { useUser } from '@/hooks'
 import { useStore } from '@/store'
+import { truncateText } from '@/utils'
 import { Link } from '@tanstack/react-router'
 import { Button } from '../ui/button'
 
@@ -44,7 +45,7 @@ const AppHeader = () => {
           <div>
             {userData ? (
               <Link to={'/profile'} className="font-bold">
-                {userData.email}
+                {truncateText(userData.email, 17)}
               </Link>
             ) : (
               <Button onClick={onLoginClick}>Login</Button>

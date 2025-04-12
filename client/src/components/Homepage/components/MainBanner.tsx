@@ -2,29 +2,9 @@ import ImgJPG from '@/assets/main-banner.jpg'
 import ImgWebp from '@/assets/main-banner.webp'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { useUser } from '@/hooks'
-import { useStore } from '@/store'
-import { useRouter } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 
 function MainBanner() {
-  const modals = useStore(state => state.modals)
-  const setModal = useStore(state => state.setModal)
-
-  const { data: userData } = useUser()
-
-  const router = useRouter()
-
-  function handleJoinUsClick() {
-    if (userData?.email) {
-      router.navigate({ to: '/events', search: { categoryId: -1, sort: 'desc' } })
-      return
-    }
-
-    setModal('registration', {
-      isOpen: !modals.registration.isOpen,
-    })
-  }
-
   return (
     <div className="relative mt-4">
       <picture className="hidden sm:block">
@@ -44,13 +24,14 @@ function MainBanner() {
 
           <span className="block">Concerts, workshops, meetings and more</span>
 
-          <Button
-            variant={'action'}
-            onClick={handleJoinUsClick}
-            className="2xl:text-2 xl m-auto text-xl font-semibold sm:text-base md:text-lg"
-          >
-            Explore events
-          </Button>
+          <Link to="/events" search={{ categoryId: -1, sort: 'desc' }} className="mx-auto w-fit">
+            <Button
+              variant={'action'}
+              className="2xl:text-2 xl m-auto text-xl font-semibold sm:text-base md:text-lg"
+            >
+              Explore events
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </div>

@@ -5,6 +5,7 @@ import {
   useUser,
   useUserCreatedEvents,
 } from '@/hooks'
+import { Link } from '@tanstack/react-router'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
 import EventCardFooter from './components/EventCardFooter'
@@ -27,6 +28,14 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
 
   return (
     <>
+      <Link
+        to="/events"
+        search={{ categoryId: -1, sort: 'desc' }}
+        className="mx-auto mt-4 block w-fit sm:mx-0"
+      >
+        <Button variant={'destructive'}>Back to events</Button>
+      </Link>
+
       {isFetching && !data && <EventDetailGhost />}
 
       <article className="m-4 w-fit sm:my-8 lg:mx-auto">
