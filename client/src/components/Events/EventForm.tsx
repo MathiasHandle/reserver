@@ -1,4 +1,4 @@
-import { EventCategoryWithEventCount } from '@/api/events/eventTypes'
+import { Event, EventCategoryWithEventCount } from '@/api/events/eventTypes'
 import { InputLabel } from '@/components/Form'
 import { Button } from '@/components/ui/button'
 import { DateTimePicker } from '@/components/ui/datetime-picker'
@@ -19,9 +19,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { useCreateEvent } from '@/hooks'
+import { useCreateEvent, useEditEvent } from '@/hooks'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -43,30 +43,42 @@ type FormSchema = z.infer<typeof formSchema>
 
 type EventFormProps = {
   eventCategories: EventCategoryWithEventCount[]
+  defaultValues?: Event
 }
 
 function EventForm(props: EventFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    // TODO pass props for PUT request
     defaultValues: {
-      name: '',
-      date: '',
-      categoryId: props.eventCategories[0].id,
-      description: '',
-      maxCapacity: 1,
+      name: props.defaultValues?.name ?? '',
+      date: props.defaultValues?.date ?? '',
+      categoryId: props.defaultValues?.eventCategory.id ?? props.eventCategories[0].id,
+      description: props.defaultValues?.description ?? '',
+      maxCapacity: props.defaultValues?.maxCapacity ?? 1,
     },
   })
 
+  const isEditMode = !!props.defaultValues?.id
+
   const { mutate: createEvent } = useCreateEvent()
+  const { mutate: editEvent } = useEditEvent()
 
   function onSubmitFn(values: FormSchema) {
-    console.log('submit: ', values)
-
-    createEvent(values)
+    if (isEditMode) {
+      if (!props.defaultValues?.id) return
+      editEvent({ ...values, id: props.defaultValues.id })
+    } else {
+      createEvent(values)
+    }
   }
 
   const [date, setDate] = useState<Date | undefined>(undefined)
+
+  useEffect(() => {
+    if (props.defaultValues?.date) {
+      setDate(new Date(props.defaultValues.date))
+    }
+  }, [props.defaultValues])
 
   function onDateChange(date: Date | undefined, onFieldChange: ControllerRenderProps['onChange']) {
     setDate(date)
@@ -169,7 +181,9 @@ function EventForm(props: EventFormProps) {
                 <FormItem>
                   <InputLabel text="Event date" />
 
+                  {/* https://github.com/radix-ui/primitives/issues/2505 */}
                   <DateTimePicker
+                    modal
                     value={date}
                     onChange={date => onDateChange(date, field.onChange)}
                     min={new Date()}

@@ -6,9 +6,7 @@ function useGetEventDetail(eventId: number) {
   return useQuery({
     queryKey: queryKeys.events.eventDetail(eventId),
     queryFn: () => getEventDetail(eventId),
-    select: data => data.data,
-    // TODO remove - just for testing
-    retry: false,
+    select: data => data.data.event,
   })
 }
 

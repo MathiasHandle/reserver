@@ -1,4 +1,5 @@
 import useCreateEvent from './api/events/useCreateEvent'
+import useEditEvent from './api/events/useEditEvent'
 import useGetEventDetail from './api/events/useGetEventDetail'
 import useGetEvents from './api/events/useGetEvents'
 import useGetJoinedEvents from './api/events/useGetJoinedEvents'
@@ -13,6 +14,7 @@ import useUser from './useUser'
 export {
   useCreateEvent,
   useCreateUser,
+  useEditEvent,
   useGetEventDetail,
   useGetEvents,
   useGetJoinedEvents,

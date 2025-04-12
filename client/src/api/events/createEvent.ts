@@ -1,12 +1,12 @@
 import { makeRequest } from '@/services/fetch'
 import { CreateEventRequestBody, CreateEventResponse } from './eventTypes'
 
-async function createUser(user: CreateEventRequestBody) {
+async function createEvent(event: CreateEventRequestBody) {
   return await makeRequest<CreateEventResponse, CreateEventRequestBody>({
     method: 'POST',
     url: 'events',
-    body: user,
+    body: event,
   })
 }
 
-export default createUser
+export default createEvent

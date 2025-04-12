@@ -1,4 +1,5 @@
 import createEvent from './events/createEvent'
+import editEvent from './events/editEvent'
 import getEventCategories from './events/getEventCategories'
 import getAllEvents from './events/getEvents'
 import getJoinedEvents from './events/getJoinedEvents'
@@ -25,6 +26,7 @@ const api = {
     getUserCreatedEvents,
     joinEvent,
     getJoinedEvents,
+    editEvent,
   },
 }
 

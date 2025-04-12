@@ -6,17 +6,19 @@ import {
   useUserCreatedEvents,
 } from '@/hooks'
 import { Link } from '@tanstack/react-router'
+import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
 import EventCardFooter from './components/EventCardFooter'
 import EventDetailGhost from './components/EventDetailGhost'
+import EventFormModal from './components/EventFormModal'
 
 type EventDetailPageProps = {
   eventId: number
 }
 
 function EventDetailPage({ eventId }: EventDetailPageProps) {
-  const { data, isFetching } = useGetEventDetail(eventId)
+  const { data: event, isFetching: isFetchingEvent } = useGetEventDetail(eventId)
   const { mutate: joinEvent } = useJoinEvent()
 
   const { data: user } = useUser()
@@ -25,6 +27,8 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
 
   const isJoined = joinedEvents?.some(event => event.id === eventId)
   const isOwner = createdEvents?.some(event => event.id === eventId)
+
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false)
 
   return (
     <>
@@ -36,14 +40,23 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
         <Button variant={'destructive'}>Back to events</Button>
       </Link>
 
-      {isFetching && !data && <EventDetailGhost />}
+      {isFetchingEvent && !event && <EventDetailGhost />}
 
       <article className="m-4 w-fit sm:my-8 lg:mx-auto">
-        {data && (
+        {event && (
           <>
             <Card className="max-w-[800px]">
               <CardHeader>
-                <h1 className="text-center text-2xl font-bold">{data.event.name}</h1>
+                <h1 className="mb-2 text-center text-2xl font-bold">{event.name}</h1>
+
+                {isOwner && (
+                  <div className="flex w-full justify-center gap-4 sm:justify-end">
+                    <Button variant="destructive">Delete</Button>
+                    <Button variant="action" onClick={() => setIsFormModalOpen(true)}>
+                      Edit
+                    </Button>
+                  </div>
+                )}
               </CardHeader>
 
               <CardContent className="flex flex-col gap-8 lg:flex-row">
@@ -53,9 +66,9 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
 
                 <div className="lg:grow lg:basis-1/2">
                   <p>
-                    {data.event.description} Lorem ipsum dolor sit amet, consectetuer adipiscing
-                    elit. Pellentesque ipsum. Etiam posuere lacus quis dolor. Nulla accumsan, elit
-                    sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel
+                    {event.description} Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                    Pellentesque ipsum. Etiam posuere lacus quis dolor. Nulla accumsan, elit sit
+                    amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel
                     leo.
                   </p>
 
@@ -75,15 +88,21 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
 
               <CardFooter className="px-6 py-0">
                 <EventCardFooter
-                  maxCapacity={data.event.maxCapacity}
-                  participantsCount={data.event.participantsCount}
-                  date={data.event.date}
+                  maxCapacity={event.maxCapacity}
+                  participantsCount={event.participantsCount}
+                  date={event.date}
                 />
               </CardFooter>
             </Card>
           </>
         )}
       </article>
+
+      <EventFormModal
+        isOpen={isFormModalOpen}
+        onChange={setIsFormModalOpen}
+        defaultValues={event}
+      />
     </>
   )
 }

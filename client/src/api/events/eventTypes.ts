@@ -83,9 +83,22 @@ type GetJoinedEventsResponse = {
   events: Event[]
 }
 
+type EditEventPathParams = {
+  eventId: number
+}
+
+type EditEventResponse = ApiEmptyResponse
+
+type EditEventRequestBody = Omit<Event, 'hostId' | 'participantsCount' | 'eventCategory'> & {
+  categoryId: number
+}
+
 export type {
   CreateEventRequestBody,
   CreateEventResponse,
+  EditEventPathParams,
+  EditEventRequestBody,
+  EditEventResponse,
   Event,
   EventCategory,
   EventCategoryWithEventCount,
