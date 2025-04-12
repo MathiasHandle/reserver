@@ -6,7 +6,7 @@ class NotFoundError<T extends CustomErrorDetail> extends CustomError<T> {
   constructor({
     message,
     detail,
-    status = httpCodes.BAD_REQUEST,
+    status = httpCodes.NOT_FOUND,
   }: {
     message: string
     detail: T

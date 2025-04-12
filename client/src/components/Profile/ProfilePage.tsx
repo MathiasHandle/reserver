@@ -42,7 +42,7 @@ function ProfilePage() {
             <div className="text-center">You didn't create any events :/ ... Try it!</div>
           )}
 
-          {createdEvents?.length && <EventList events={createdEvents} />}
+          {createdEvents && <EventList events={createdEvents} />}
         </section>
 
         <section>

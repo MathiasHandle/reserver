@@ -1,11 +1,12 @@
 import {
+  useDeleteEvent,
   useGetEventDetail,
   useGetJoinedEvents,
   useJoinEvent,
   useUser,
   useUserCreatedEvents,
 } from '@/hooks'
-import { Link } from '@tanstack/react-router'
+import { Link, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
@@ -30,6 +31,18 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
 
   const [isFormModalOpen, setIsFormModalOpen] = useState(false)
 
+  const { mutate: deleteEvent } = useDeleteEvent()
+
+  const router = useRouter()
+
+  function onDeleteEventClick() {
+    deleteEvent(eventId, {
+      onSuccess: () => {
+        router.navigate({ to: '/events', search: { categoryId: -1, sort: 'desc' } })
+      },
+    })
+  }
+
   return (
     <>
       <Link
@@ -51,7 +64,9 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
 
                 {isOwner && (
                   <div className="flex w-full justify-center gap-4 sm:justify-end">
-                    <Button variant="destructive">Delete</Button>
+                    <Button variant="destructive" onClick={onDeleteEventClick}>
+                      Delete
+                    </Button>
                     <Button variant="action" onClick={() => setIsFormModalOpen(true)}>
                       Edit
                     </Button>

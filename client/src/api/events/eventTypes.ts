@@ -93,9 +93,14 @@ type EditEventRequestBody = Omit<Event, 'hostId' | 'participantsCount' | 'eventC
   categoryId: number
 }
 
+type DeleteEventPathParams = {
+  eventId: number
+}
+
 export type {
   CreateEventRequestBody,
   CreateEventResponse,
+  DeleteEventPathParams,
   EditEventPathParams,
   EditEventRequestBody,
   EditEventResponse,

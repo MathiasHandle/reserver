@@ -1,10 +1,12 @@
 import httpCodes from '@/constants/httpCodes'
-import { NotFoundError } from '@/services/error'
+import { UnauthorizedError } from '@/services/error'
 import {
   createEvent,
+  deleteEvent,
   editEvent,
   getAllEvents,
   getEventById,
+  getEventByIdOrThrow,
   getEventCategories,
   getEventsCreatedByUser,
   getJoinedEvents,
@@ -15,6 +17,7 @@ import type { NextFunction, Request, Response } from 'express'
 import type {
   CreateEventRequest,
   CreateEventResponse,
+  DeleteEventPathParams,
   EditEventPathParams,
   EditEventRequest,
   GetAllEventsQueryParams,
@@ -68,26 +71,10 @@ async function handleGetEventById(
   next: NextFunction
 ) {
   try {
-    const eventData = await getEventById(req.params.eventId)
-
-    if (!eventData) {
-      const notFoundError = new NotFoundError({
-        message: 'Event not found',
-        status: httpCodes.NOT_FOUND,
-        detail: null,
-      })
-
-      return next(notFoundError)
-    }
-
+    const eventData = await getEventByIdOrThrow(req.params.eventId)
     res.status(httpCodes.OK).json({ event: eventData })
   } catch (err) {
-    if (err instanceof NotFoundError) {
-      return next(err)
-    }
-
-    console.log(err)
-    res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
+    return next(err)
   }
 }
 
@@ -174,6 +161,26 @@ async function handleEditEvent(
   }
 }
 
+async function handleDeleteEvent(
+  req: TypedRequest<DeleteEventPathParams>,
+  res: Response<APIEmptyResponse | ErrorResponse>,
+  next: NextFunction
+) {
+  try {
+    const userId = req.session.user?.id
+    // Shouldnt happen, because of auth middleware
+    if (!userId) {
+      throw new UnauthorizedError({ detail: null })
+    }
+
+    await deleteEvent(Number(req.params.eventId), userId)
+
+    res.status(httpCodes.OK).send({})
+  } catch (err) {
+    next(err)
+  }
+}
+
 export default {
   handleGetAllEvents,
   handleGetEventById,
@@ -183,4 +190,5 @@ export default {
   handleJoinEvent,
   handleGetJoinedEvents,
   handleEditEvent,
+  handleDeleteEvent,
 }

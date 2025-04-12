@@ -5,7 +5,7 @@ type CustomErrorDetail = {
 } | null
 
 /**
- * Custom error class, should be used for all errors that are thrown in the applicatio as a base class
+ * Custom error class, should be used for all errors that are thrown in the application as a base class
  */
 class CustomError<T extends CustomErrorDetail> extends Error {
   message: string

@@ -118,7 +118,6 @@ function handleCheckAuth(
   // TODO delete this check + introduce new AuthenticatedRequest type
   if (!req.session.user) {
     const unauthorizedError = new UnauthorizedError<null>({
-      status: httpCodes.UNAUTHORIZED,
       detail: null,
     })
 

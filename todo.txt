@@ -9,7 +9,7 @@ TODO events page
   - DONE free spots / how many seats are booked already
 
 TODO event detail page
-  TODO ux
+  DONE ux
     - name
     - description
     - max capacity
@@ -17,8 +17,8 @@ TODO event detail page
     - date
     - DONE free spots / how many seats are booked already
   DONE join event
-    - if Im owner I cant joint!
-  TODO delete event (if im the owner)
+    DONE if Im owner I cant joint!
+  DONE delete event (if im the owner)
   DONE implement joining an event
   FIXME if user is not logged in and wants to join -> open login modal
   DONE if user already joined -> display different text in button
@@ -52,7 +52,16 @@ TODO automatical sign in for user after registration
 
 
 Server
-TODO check if all errors are handled properly
+FIXME check if all errors are handled properly
+  TODO try catch in all controllers
+  TODO return next(err) - dont need to check for type
+  TODO create new Internal Server error type
+  TODO notFoundError -> return 404 and delete argument of fn as not to overwrite it
+  FIXME validateJoinEvent -> move event not found validation to servise layer
+  TODO remove try catch in servise layer and do logging in controllers if needed
+  TODO replace all (!userId) return with throw UnauthorizedError + comment shouldnt happen
+  TODO set detail as null in UnauthorizedError and make it optional + refactor code
+  TODO set status code as readonly for all error messages
 TODO Request<...> -> TypedRequest<...>
 TODO remove console.logs
 TODO extract participantsCount to fn / query and reuse it
@@ -62,6 +71,10 @@ TODO new error for Internal server error (controllers)
 TODO use zod in ALL validators
 FIXME add notNull to userEvents schema
 FIXME eventParticipants shouldnt count host of the event as a participant
+
+
+TODO getEventById and getEventByIdOrThrow -> use as needed(throw variant for more DRY error handling)
+- replace deleteEvent implementation + error handling
 
 
 

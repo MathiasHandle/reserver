@@ -92,6 +92,14 @@ router.put(
   eventsController.handleEditEvent
 )
 
+// Delete event
+router.delete(
+  `${eventsBaseUrl}/:eventId`,
+  checkAuth,
+  eventsValidator.validateEventIdInPath,
+  eventsController.handleDeleteEvent
+)
+
 // Create event
 router.post(
   `${eventsBaseUrl}`,

@@ -1,5 +1,6 @@
+import { ValidationError } from '@/services/error'
 import type { NextFunction, Request, Response } from 'express'
-import { z } from 'zod'
+import { z, ZodError } from 'zod'
 
 const eventIdSchema = z
   .number()
@@ -9,16 +10,24 @@ const eventIdSchema = z
 // TODO replace validateGetEventDetail with this
 function validateEventIdInPath(req: Request, _res: Response, next: NextFunction) {
   try {
-    const { eventId } = req.params
+    const eventId = req.params.eventId
 
-    const eventIdNum = Number(eventId)
-
-    eventIdSchema.parse(eventIdNum)
+    eventIdSchema.parse(Number(eventId))
+    next()
   } catch (err) {
+    if (err instanceof ZodError) {
+      const validationError = new ValidationError({
+        message: 'Invalid event id',
+        detail: {
+          eventId: err.errors[0].message,
+        },
+      })
+
+      next(validationError)
+    }
+
     next(err)
   }
-
-  next()
 }
 
 export default validateEventIdInPath

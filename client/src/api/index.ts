@@ -1,4 +1,5 @@
 import createEvent from './events/createEvent'
+import deleteEvent from './events/deleteEvent'
 import editEvent from './events/editEvent'
 import getEventCategories from './events/getEventCategories'
 import getAllEvents from './events/getEvents'
@@ -27,6 +28,7 @@ const api = {
     joinEvent,
     getJoinedEvents,
     editEvent,
+    deleteEvent,
   },
 }
 
