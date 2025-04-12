@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 function useGetEvents(options?: GetAllEventsQueryParams) {
   return useQuery({
-    queryKey: queryKeys.events.eventList(options),
+    queryKey: queryKeys.events.eventListWithParams(options),
     queryFn: () => api.events.getAllEvents(options),
     select: data => data.data,
   })

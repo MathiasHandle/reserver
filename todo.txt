@@ -26,7 +26,7 @@ TODO event detail page
   TODO update event
     FIXME cannot change time
     DONE close popup onSuccess
-    FIXME when returing via button, events list is not refetched
+    DONE when returing via button, events list is not refetched
   
 FIXME logout -> event detail -> user can edit/delete event
 
@@ -47,7 +47,7 @@ TODO ghosts -> separate components
 DONE close icons for modals
 
 Registration
-TODO close modal after sucessfull Registration
+DONE close modal after sucessfull Registration
 TODO automatical sign in for user after registration
 
 

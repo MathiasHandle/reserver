@@ -10,8 +10,10 @@ const queryKeys = {
   events: {
     all: () => ['events'] as const,
 
-    eventList: (options?: GetAllEventsQueryParams) =>
-      [...queryKeys.events.all(), 'list', options] as const,
+    eventList: () => [...queryKeys.events.all(), 'list'] as const,
+
+    eventListWithParams: (options?: GetAllEventsQueryParams) =>
+      [...queryKeys.events.eventList(), options] as const,
 
     userCreatedEvents: () => [...queryKeys.events.all(), 'my-created'] as const,
 
