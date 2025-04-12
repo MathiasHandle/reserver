@@ -3,10 +3,10 @@ TODO HP
   TODO top 3 events
 
 TODO events page
-  TODO sorting by categories
+  DONE sorting by categories
   TODO pagination
   EventCard
-  - TODO free spots / how many seats are booked already
+  - DONE free spots / how many seats are booked already
 
 TODO event detail page
   TODO ux
@@ -15,25 +15,24 @@ TODO event detail page
     - max capacity
     - registered capacity
     - date
-    - TODO free spots / how many seats are booked already
-  TODO join event
+    - DONE free spots / how many seats are booked already
+  DONE join event
     - if Im owner I cant joint!
   TODO delete event (if im the owner)
-  TODO implement joining an event
-  TODO if user is not logged in -> open login modal
-  TODO if user already joined -> display different text in button
-  TODO go back to events button
+  DONE implement joining an event
+  FIXME if user is not logged in and wants to join -> open login modal
+  DONE if user already joined -> display different text in button
+  DONE go back to events button
   TODO update event
     FIXME cannot change time
-    TODO close popup onSuccess
+    DONE close popup onSuccess
 
-TODO create new event
-TODO move hooks/api into subfolders
+DONE create new event
+DONE move hooks/api into subfolders
 
-TODO profile page
-  TODO ux - Lorem ipsum?
-  TODO logout
-  TODO list owned events
+DONE profile page
+  DONE logout
+  DONE list owned events
 
 DONE footer
   - with dumb links

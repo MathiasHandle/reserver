@@ -100,7 +100,7 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
 
       <EventFormModal
         isOpen={isFormModalOpen}
-        onChange={setIsFormModalOpen}
+        setIsOpen={setIsFormModalOpen}
         defaultValues={event}
       />
     </>

@@ -44,6 +44,7 @@ type FormSchema = z.infer<typeof formSchema>
 type EventFormProps = {
   eventCategories: EventCategoryWithEventCount[]
   defaultValues?: Event
+  onEditSuccess?: () => void
 }
 
 function EventForm(props: EventFormProps) {
@@ -66,7 +67,14 @@ function EventForm(props: EventFormProps) {
   function onSubmitFn(values: FormSchema) {
     if (isEditMode) {
       if (!props.defaultValues?.id) return
-      editEvent({ ...values, id: props.defaultValues.id })
+      editEvent(
+        { ...values, id: props.defaultValues.id },
+        {
+          onSuccess: () => {
+            props.onEditSuccess?.()
+          },
+        }
+      )
     } else {
       createEvent(values)
     }
