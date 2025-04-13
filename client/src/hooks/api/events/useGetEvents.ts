@@ -7,7 +7,7 @@ function useGetEvents(options?: GetAllEventsQueryParams) {
   return useQuery({
     queryKey: queryKeys.events.eventListWithParams(options),
     queryFn: () => api.events.getAllEvents(options),
-    select: data => data.data,
+    select: data => data.data.events,
   })
 }
 

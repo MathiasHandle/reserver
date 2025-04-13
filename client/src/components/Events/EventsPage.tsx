@@ -43,7 +43,7 @@ function EventsPage(props: EventsPageProps) {
 
         {isFetchingEvents && !events && <EventListGhost numberOfEvents={12} />}
 
-        {events && <EventList events={events.events} />}
+        {events && <EventList events={events} />}
       </section>
     </article>
   )
