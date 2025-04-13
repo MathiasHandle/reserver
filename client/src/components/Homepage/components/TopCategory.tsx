@@ -7,10 +7,8 @@ type TopCategoryProps = {
 }
 
 function TopCategory(props: TopCategoryProps) {
-  // TODO add proper redirect link
-
   return (
-    <Link to="/">
+    <Link to="/events" search={{ categoryId: props.category.id, sort: 'desc' }}>
       <Card>
         <CardContent>
           <div className="flex items-center gap-2 text-center">
