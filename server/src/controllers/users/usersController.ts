@@ -76,25 +76,26 @@ async function handleLogin(
   }
 }
 
-// TODO error handling check
 function handleGetCurrentUser(
   req: Request<ApiEmptyRequestBody>,
   res: Response<CheckAuthResponse>,
   next: NextFunction
 ) {
-  if (!req.session.user) {
-    const unauthorizedError = new UnauthorizedError<null>({
-      detail: null,
-    })
+  try {
+    if (!req.session.user) {
+      const unauthorizedError = new UnauthorizedError<null>({
+        detail: null,
+      })
 
-    return next(unauthorizedError)
+      return next(unauthorizedError)
+    }
+
+    res.status(httpCodes.OK).json({ user: req.session.user })
+  } catch (err) {
+    next(err)
   }
-
-  res.status(httpCodes.OK).json({ user: req.session.user })
 }
 
-// TODO error handling check
-// TODO mark this route as protected via middleware
 async function handleLogout(
   req: Request<ApiEmptyRequestBody>,
   res: Response<APIEmptyResponse>,

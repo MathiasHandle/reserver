@@ -22,50 +22,42 @@ class LoginError<T extends CustomErrorDetail> extends CustomError<T> {
 }
 
 async function getUserByCredentials(credentials: LoginUserRequestBody) {
-  try {
-    // Find user by email
-    const user = await db
-      .select()
-      .from(usersSchema)
-      .where(eq(usersSchema.email, credentials.email))
-      .limit(1)
+  // Find user by email
+  const user = await db
+    .select()
+    .from(usersSchema)
+    .where(eq(usersSchema.email, credentials.email))
+    .limit(1)
 
-    if (!user.length) {
-      throw new LoginError({
-        message: 'Incorrect user credentials',
-        status: httpCodes.NOT_FOUND,
-        detail: null,
-      })
-    }
-
-    // Compare passwords that they match
-    const isPasswordMatch = await comparePasswords(credentials.password, user[0].password)
-    if (!isPasswordMatch) {
-      throw new LoginError({
-        message: 'Incorrect user credentials',
-        status: httpCodes.NOT_FOUND,
-        detail: null,
-      })
-    }
-
-    // Return user data without password
-    const { id, name, surname, email } = user[0]
-
-    const userWithoutPassword = {
-      id,
-      name,
-      surname,
-      email,
-    }
-
-    return userWithoutPassword
-  } catch (err) {
-    if (err instanceof LoginError) {
-      throw err
-    }
-
-    throw new Error('Internal server error')
+  if (!user.length) {
+    throw new LoginError({
+      message: 'Incorrect user credentials',
+      status: httpCodes.NOT_FOUND,
+      detail: null,
+    })
   }
+
+  // Compare passwords that they match
+  const isPasswordMatch = await comparePasswords(credentials.password, user[0].password)
+  if (!isPasswordMatch) {
+    throw new LoginError({
+      message: 'Incorrect user credentials',
+      status: httpCodes.NOT_FOUND,
+      detail: null,
+    })
+  }
+
+  // Return user data without password
+  const { id, name, surname, email } = user[0]
+
+  const userWithoutPassword = {
+    id,
+    name,
+    surname,
+    email,
+  }
+
+  return userWithoutPassword
 }
 
 export default getUserByCredentials

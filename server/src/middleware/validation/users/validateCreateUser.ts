@@ -1,6 +1,5 @@
 import type { CreateUserRequestBody } from '@/controllers/users/userTypes'
 import { ValidationError } from '@/services/error'
-import { getUserByEmail } from '@/services/user'
 import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Response } from 'express'
 import { z } from 'zod'
@@ -39,17 +38,6 @@ async function validateCreateUser(
 ) {
   try {
     createUserSchema.parse(req.body)
-
-    const userDb = await getUserByEmail(req.body.email)
-    if (userDb) {
-      const validationError = new ValidationError<ErrorDetail>({
-        message: 'User with this email already exists',
-        detail: {
-          email: ['User with this email already exists'],
-        },
-      })
-      return next(validationError)
-    }
 
     next()
   } catch (err) {

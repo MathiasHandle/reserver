@@ -2,13 +2,9 @@ import { usersSchema } from '@/model/users'
 import { db } from '@/services/database'
 
 async function getAllUsers() {
-  try {
-    const usersData = await db.select().from(usersSchema)
+  const usersData = await db.select().from(usersSchema)
 
-    return usersData
-  } catch (err) {
-    console.log(err)
-  }
+  return usersData
 }
 
 export default getAllUsers
