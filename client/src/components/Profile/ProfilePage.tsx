@@ -45,7 +45,7 @@ function ProfilePage() {
             <div className="text-center">You didn't join any events :/ ... Try it!</div>
           )}
 
-          {joinedEvents?.length && <EventList events={joinedEvents} />}
+          {joinedEvents && <EventList events={joinedEvents} />}
         </section>
       </div>
     </>

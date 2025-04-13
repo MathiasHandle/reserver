@@ -149,15 +149,21 @@ async function handleGetJoinedEvents(
 
 async function handleEditEvent(
   req: TypedRequest<EditEventPathParams, EditEventRequest>,
-  res: Response<APIEmptyResponse | ErrorResponse>
+  res: Response<APIEmptyResponse>,
+  next: NextFunction
 ) {
   try {
-    await editEvent(req.body)
+    const userId = req.session.user?.id
+    // Shouldnt happen, because of auth middleware
+    if (!userId) {
+      throw new UnauthorizedError({ detail: null })
+    }
+
+    await editEvent(req.body, userId)
 
     res.status(httpCodes.OK).json({})
   } catch (err) {
-    console.log(err)
-    res.status(httpCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' })
+    next(err)
   }
 }
 
