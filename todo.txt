@@ -1,6 +1,7 @@
 Client
 DONE HP
   DONE top 3 events
+  FIXME after joining event from HP -> reset events
 
 TODO events page
   DONE sorting by categories
@@ -62,15 +63,14 @@ FIXME check if all errors are handled properly
   TODO replace all (!userId) return with throw UnauthorizedError + comment shouldnt happen
   TODO set detail as null in UnauthorizedError and make it optional + refactor code
   TODO set status code as readonly for all error messages
-TODO Request<...> -> TypedRequest<...>
+DONE Request<...> -> TypedRequest<...>
 TODO remove console.logs
 TODO extract participantsCount to fn / query and reuse it
-TODO change default type for TypedRequest -> TRequestBody to ApiEmptyRequestBody
-TODO change default type for TypedRequest -> TQueryParams to EmptyObject
+DONE change default type for TypedRequest -> TRequestBody to ApiEmptyRequestBody
+DONE change default type for TypedRequest -> TQueryParams to EmptyObject
 TODO new error for Internal server error (controllers)
 TODO use zod in ALL validators
 FIXME add notNull to userEvents schema
-FIXME eventParticipants shouldnt count host of the event as a participant
 
 
 TODO getEventById and getEventByIdOrThrow -> use as needed(throw variant for more DRY error handling)
@@ -82,6 +82,7 @@ TODO remove all todos, fixme, bug ...
 
 TODO update npm packages (client & server)
 TODO clean dummy data
+  TODO add some users into events (currenly non of the events has attendees)
 TODO add database to .gitignore
 TODO remove unused sql migrations in root
 TODO try build (client & server)

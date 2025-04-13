@@ -1,7 +1,7 @@
 import httpCodes from '@/constants/httpCodes'
-import type { LoginUserRequestBody } from '@/controllers/users/userTypes'
+import type { LoginUserRequestBody, LoginUserResponse } from '@/controllers/users/userTypes'
 import { ValidationError } from '@/services/error'
-import type { TypedRequest } from '@/types/sharedTypes'
+import type { ApiEmptyPathParams, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Response } from 'express'
 import { z } from 'zod'
 
@@ -11,8 +11,8 @@ const loginSchema = z.object({
 })
 
 function validateLogin(
-  req: TypedRequest<Record<never, never>, LoginUserRequestBody>,
-  _: Response,
+  req: TypedRequest<ApiEmptyPathParams, LoginUserRequestBody>,
+  _: Response<LoginUserResponse>,
   next: NextFunction
 ) {
   try {

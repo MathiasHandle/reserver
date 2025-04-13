@@ -1,6 +1,6 @@
 import type { CreateEventRequest } from '@/controllers/events/eventTypes'
 import { ValidationError } from '@/services/error'
-import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
+import type { ApiEmptyPathParams, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Response } from 'express'
 import { z } from 'zod'
 import { eventInsertSchema } from '../schemas'
@@ -9,7 +9,7 @@ import { checkEventCategory, checkFutureDateTime, checkSameNameEvent } from '../
 const createEventSchema = eventInsertSchema
 
 async function validateCreateEvent(
-  req: TypedRequest<EmptyObject, CreateEventRequest>,
+  req: TypedRequest<ApiEmptyPathParams, CreateEventRequest>,
   _res: Response,
   next: NextFunction
 ) {

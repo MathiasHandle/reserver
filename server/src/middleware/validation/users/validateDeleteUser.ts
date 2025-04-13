@@ -1,6 +1,7 @@
-import type { DeleteUserPathParams } from '@/controllers/users/userTypes'
+import type { DeleteUserPathParams, DeleteUserResponse } from '@/controllers/users/userTypes'
 import { ValidationError } from '@/services/error'
-import type { NextFunction, Request, Response } from 'express'
+import type { TypedRequest } from '@/types/sharedTypes'
+import type { NextFunction, Response } from 'express'
 import { z } from 'zod'
 import validateUserId from './utils/validateUserId'
 
@@ -8,7 +9,11 @@ type ErrorDetail = {
   message: string
 }
 
-function validateDeleteUser(req: Request<DeleteUserPathParams>, _: Response, next: NextFunction) {
+function validateDeleteUser(
+  req: TypedRequest<DeleteUserPathParams>,
+  _: Response<DeleteUserResponse>,
+  next: NextFunction
+) {
   try {
     validateUserId(req.params.userId)
 

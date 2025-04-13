@@ -75,7 +75,7 @@ router.get(`${eventsBaseUrl}/my-joined`, checkAuth, eventsController.handleGetJo
 // Get event by id
 router.get(
   `${eventsBaseUrl}/:eventId`,
-  eventsValidator.validateGetEventDetail,
+  eventsValidator.validateEventIdInPath,
   eventsController.handleGetEventById
 )
 

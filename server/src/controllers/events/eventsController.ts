@@ -12,8 +12,8 @@ import {
   getJoinedEvents,
   joinEvent,
 } from '@/services/events'
-import type { APIEmptyResponse, EmptyObject, TypedRequest } from '@/types/sharedTypes'
-import type { NextFunction, Request, Response } from 'express'
+import type { ApiEmptyPathParams, APIEmptyResponse, TypedRequest } from '@/types/sharedTypes'
+import type { NextFunction, Response } from 'express'
 import type {
   CreateEventRequest,
   CreateEventResponse,
@@ -66,12 +66,14 @@ async function handleGetEventCategories(
 }
 
 async function handleGetEventById(
-  req: Request<GetEventDetailPathParams>,
+  req: TypedRequest<GetEventDetailPathParams>,
   res: Response<GetEventDetailResponse | ErrorResponse>,
   next: NextFunction
 ) {
   try {
-    const eventData = await getEventByIdOrThrow(req.params.eventId)
+    const eventId = Number(req.params.eventId)
+
+    const eventData = await getEventByIdOrThrow(eventId)
     res.status(httpCodes.OK).json({ event: eventData })
   } catch (err) {
     return next(err)
@@ -79,7 +81,7 @@ async function handleGetEventById(
 }
 
 async function handleCreateEvent(
-  req: TypedRequest<EmptyObject, CreateEventRequest>,
+  req: TypedRequest<ApiEmptyPathParams, CreateEventRequest>,
   res: Response<CreateEventResponse | ErrorResponse>
 ) {
   try {
@@ -131,7 +133,7 @@ async function handleJoinEvent(
 }
 
 async function handleGetJoinedEvents(
-  req: Request,
+  req: TypedRequest,
   res: Response<GetJoinedEventsResponse | ErrorResponse>
 ) {
   try {

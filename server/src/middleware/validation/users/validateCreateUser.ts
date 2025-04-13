@@ -1,6 +1,6 @@
 import type { CreateUserRequestBody } from '@/controllers/users/userTypes'
 import { ValidationError } from '@/services/error'
-import type { EmptyObject, TypedRequest } from '@/types/sharedTypes'
+import type { ApiEmptyPathParams, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Response } from 'express'
 import { z } from 'zod'
 
@@ -32,7 +32,7 @@ const createUserSchema = z
   })
 
 async function validateCreateUser(
-  req: TypedRequest<EmptyObject, CreateUserRequestBody>,
+  req: TypedRequest<ApiEmptyPathParams, CreateUserRequestBody>,
   _: Response,
   next: NextFunction
 ) {

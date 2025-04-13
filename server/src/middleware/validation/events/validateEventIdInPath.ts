@@ -7,7 +7,6 @@ const eventIdSchema = z
   .int('Event id must be an integer')
   .positive('Event id must be a positive integer')
 
-// TODO replace validateGetEventDetail with this
 function validateEventIdInPath(req: Request, _res: Response, next: NextFunction) {
   try {
     const eventId = req.params.eventId
@@ -23,7 +22,7 @@ function validateEventIdInPath(req: Request, _res: Response, next: NextFunction)
         },
       })
 
-      next(validationError)
+      return next(validationError)
     }
 
     next(err)

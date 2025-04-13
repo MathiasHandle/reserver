@@ -38,7 +38,7 @@ type GetEventCategoriesResponse = {
 }
 
 type GetEventDetailPathParams = {
-  eventId: number
+  eventId: string
 }
 
 type GetEventDetailResponse = {

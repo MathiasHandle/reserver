@@ -1,8 +1,13 @@
 import httpCodes from '@/constants/httpCodes'
 import { UnauthorizedError } from '@/services/error'
 import { createUser, deleteUser, getAllUsers, getUserByCredentials } from '@/services/user'
-import type { ApiEmptyRequestBody, APIEmptyResponse, TypedRequest } from '@/types/sharedTypes'
-import type { NextFunction, Request, Response } from 'express'
+import type {
+  ApiEmptyPathParams,
+  ApiEmptyRequestBody,
+  APIEmptyResponse,
+  TypedRequest,
+} from '@/types/sharedTypes'
+import type { NextFunction, Response } from 'express'
 import { promisify } from 'node:util'
 import type {
   CheckAuthResponse,
@@ -16,7 +21,7 @@ import type {
 } from './userTypes'
 
 async function handleGetAllUsers(
-  _: Request,
+  _: TypedRequest,
   res: Response<GetAllUsersResponse>,
   next: NextFunction
 ) {
@@ -30,7 +35,7 @@ async function handleGetAllUsers(
 }
 
 async function handleCreateUser(
-  req: TypedRequest<Record<never, never>, CreateUserRequestBody>,
+  req: TypedRequest<ApiEmptyPathParams, CreateUserRequestBody>,
   res: Response<CreateUserResponse>,
   next: NextFunction
 ) {
@@ -44,7 +49,7 @@ async function handleCreateUser(
 }
 
 async function handleDeleteUser(
-  req: Request<DeleteUserPathParams>,
+  req: TypedRequest<DeleteUserPathParams>,
   res: Response<DeleteUserResponse>,
   next: NextFunction
 ) {
@@ -59,7 +64,7 @@ async function handleDeleteUser(
 }
 
 async function handleLogin(
-  req: Request<LoginUserRequestBody>,
+  req: TypedRequest<ApiEmptyPathParams, LoginUserRequestBody>,
   res: Response<LoginUserResponse>,
   next: NextFunction
 ) {
@@ -77,7 +82,7 @@ async function handleLogin(
 }
 
 function handleGetCurrentUser(
-  req: Request<ApiEmptyRequestBody>,
+  req: TypedRequest<ApiEmptyPathParams, ApiEmptyRequestBody>,
   res: Response<CheckAuthResponse>,
   next: NextFunction
 ) {
@@ -97,7 +102,7 @@ function handleGetCurrentUser(
 }
 
 async function handleLogout(
-  req: Request<ApiEmptyRequestBody>,
+  req: TypedRequest<ApiEmptyPathParams, ApiEmptyRequestBody>,
   res: Response<APIEmptyResponse>,
   next: NextFunction
 ) {
