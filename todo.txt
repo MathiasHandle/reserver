@@ -1,74 +1,34 @@
 Client
 DONE HP
   DONE top 3 events
-  FIXME after joining event from HP -> reset events
+
 
 TODO events page
   DONE sorting by categories
   TODO pagination
-  EventCard
-  - DONE free spots / how many seats are booked already
+
 
 TODO event detail page
-  DONE ux
-    - name
-    - description
-    - max capacity
-    - registered capacity
-    - date
-    - DONE free spots / how many seats are booked already
-  DONE join event
-    DONE if Im owner I cant joint!
-  DONE delete event (if im the owner)
-  DONE implement joining an event
-  DONE if user is not logged in and wants to join -> open login modal
-  DONE if user already joined -> display different text in button
-  DONE go back to events button
   TODO update event
     FIXME cannot change time
     DONE close popup onSuccess
     DONE when returing via button, events list is not refetched
   
-DONE logout -> event detail -> user can edit/delete event
-
-DONE create new event
-DONE move hooks/api into subfolders
-
-DONE profile page
-  DONE logout
-  DONE list owned events
-
-DONE footer
-  - with dumb links
-
-DONE remove console.logs
-
 TODO ghosts -> separate components
 
-DONE close icons for modals
+TODO better implementation for protected route /profile
+  - https://tanstack.com/router/latest/docs/framework/react/examples/basic-react-query-file-based?path=examples%2Freact%2Fbasic-react-query-file-based%2Fsrc%2Fmain.tsx
+  - by using loader it should fetch auth EP EVERY time user tries to access it (currently if BE logs out user, and FE dont make refresh, it will let user access profile page as query wont re-fetch)
+
 
 Registration
 DONE close modal after sucessfull Registration
-TODO automatical sign in for user after registration
+TODO automatic sign in for user after registration
 
 
 Server
-DONE check if all errors are handled properly
-  DONE try catch in all controllers
-  DONE return next(err) - dont need to check for type
-  DONE notFoundError -> return 404 and delete argument of fn as not to overwrite it
-  DONE remove try catch in servise layer and do logging in controllers if needed
-  DONE replace all (!userId) return with throw UnauthorizedError + comment shouldnt happen
-DONE Request<...> -> TypedRequest<...>
-DONE remove console.logs
 TODO extract participantsCount to fn / query and reuse it
-DONE change default type for TypedRequest -> TRequestBody to ApiEmptyRequestBody
-DONE change default type for TypedRequest -> TQueryParams to EmptyObject
 FIXME add notNull to userEvents schema?
-
-
-DONE getEventById and getEventByIdOrThrow -> use as needed(throw variant for more DRY error handling)
-
 
 
 TODO remove all todos, fixme, bug ...
