@@ -1,12 +1,6 @@
 import httpCodes from '@/constants/httpCodes'
-import { NotFoundError, UnauthorizedError } from '@/services/error'
-import {
-  createUser,
-  deleteUser,
-  getAllUsers,
-  getUserByCredentials,
-  getUserById,
-} from '@/services/user'
+import { UnauthorizedError } from '@/services/error'
+import { createUser, deleteUser, getAllUsers, getUserByCredentials } from '@/services/user'
 import type { ApiEmptyRequestBody, APIEmptyResponse, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Request, Response } from 'express'
 import { promisify } from 'node:util'
@@ -17,8 +11,6 @@ import type {
   DeleteUserPathParams,
   DeleteUserResponse,
   GetAllUsersResponse,
-  GetUserByIdPathParams,
-  GetUserByIdResponse,
   LoginUserRequestBody,
   LoginUserResponse,
 } from './userTypes'
@@ -32,31 +24,6 @@ async function handleGetAllUsers(
     const users = await getAllUsers()
 
     res.status(httpCodes.OK).json({ users: users ?? [] })
-  } catch (err) {
-    next(err)
-  }
-}
-
-async function handleGetUserById(
-  req: TypedRequest<GetUserByIdPathParams>,
-  res: Response<GetUserByIdResponse>,
-  next: NextFunction
-) {
-  try {
-    const userIdInt = parseInt(req.params.userId)
-    const user = await getUserById(userIdInt)
-
-    if (!user) {
-      const notFoundError = new NotFoundError({
-        message: 'User not found',
-        status: httpCodes.UNPROCESSABLE_ENTITY,
-        detail: null,
-      })
-
-      return next(notFoundError)
-    }
-
-    res.status(httpCodes.OK).json({ user })
   } catch (err) {
     next(err)
   }
@@ -145,7 +112,6 @@ async function handleLogout(
 
 export default {
   handleGetAllUsers,
-  handleGetUserById,
   handleCreateUser,
   handleDeleteUser,
   handleLogin,

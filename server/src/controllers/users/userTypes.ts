@@ -7,14 +7,6 @@ type GetAllUsersResponse = {
   users: User[]
 }
 
-type GetUserByIdPathParams = {
-  userId: string
-}
-
-type GetUserByIdResponse = {
-  user: User
-}
-
 type CreateUserRequestBody = Omit<UsersInsert, 'id'> & {
   confirmPassword: string
 }
@@ -45,8 +37,6 @@ export type {
   DeleteUserPathParams,
   DeleteUserResponse,
   GetAllUsersResponse,
-  GetUserByIdPathParams,
-  GetUserByIdResponse,
   LoginUserRequestBody,
   LoginUserResponse,
   UserWithoutPassword,

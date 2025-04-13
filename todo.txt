@@ -79,3 +79,9 @@ TODO getEventById and getEventByIdOrThrow -> use as needed(throw variant for mor
 
 
 TODO remove all todos, fixme, bug ...
+
+TODO update npm packages (client & server)
+TODO clean dummy data
+TODO add database to .gitignore
+TODO remove unused sql migrations in root
+TODO try build (client & server)

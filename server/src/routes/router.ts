@@ -15,14 +15,10 @@ router.get('/', (req: Request, res: Response) => {
   res.status(httpCodes.OK).json({ message: 'Hello World' })
 })
 
-// TODO trim and escape inputs
-// TODO check/add validations for restricted characters
-
 //#region Users
 const usersBaseUrl = '/api/users'
 
-// TODO delete maybe?
-// get all users
+// get all users -> just for testing
 router.get(usersBaseUrl, usersController.handleGetAllUsers)
 
 // TODO add auth middleware -> check if user is logged in
@@ -34,14 +30,6 @@ router.get(`${usersBaseUrl}/me`, checkAuth, usersController.handleCheckAuth)
 
 // logout user
 router.post(`${usersBaseUrl}/logout`, checkAuth, usersController.handleLogout)
-
-// TODO delete maybe?
-// get single user
-router.get(
-  `${usersBaseUrl}/:userId`,
-  usersValidator.validateUserIdPath,
-  usersController.handleGetUserById
-)
 
 // TODO add auth middleware
 // delete user
