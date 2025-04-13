@@ -12,7 +12,8 @@ TODO event detail page
   TODO update event
     FIXME cannot change time
     DONE close popup onSuccess
-    DONE when returing via button, events list is not refetched
+    DONE when returing via button, events list is not refetche
+  TODO un-join event
   
 TODO ghosts -> separate components
 
@@ -29,9 +30,4 @@ TODO automatic sign in for user after registration
 Server
 TODO extract participantsCount to fn / query and reuse it
 FIXME add notNull to userEvents schema?
-
-
-TODO remove all todos, fixme, bug ...
-
-TODO update npm packages (client & server)
 TODO try build (client & server)
