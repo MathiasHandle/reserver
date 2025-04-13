@@ -7,6 +7,7 @@ function useLogoutUser(onSuccess?: () => void) {
     mutationFn: api.users.logoutUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.users.userDetail() })
+      queryClient.setQueriesData({ queryKey: queryKeys.events.myEvents() }, null)
       onSuccess?.()
     },
   })

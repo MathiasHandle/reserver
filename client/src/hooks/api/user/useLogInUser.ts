@@ -7,6 +7,7 @@ function useLogInUser() {
     mutationFn: api.users.loginUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.users.userDetail() })
+      queryClient.invalidateQueries({ queryKey: queryKeys.events.myEvents() })
     },
   })
 }

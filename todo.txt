@@ -28,7 +28,7 @@ TODO event detail page
     DONE close popup onSuccess
     DONE when returing via button, events list is not refetched
   
-FIXME logout -> event detail -> user can edit/delete event
+DONE logout -> event detail -> user can edit/delete event
 
 DONE create new event
 DONE move hooks/api into subfolders
