@@ -4,17 +4,12 @@ import { eventCategoriesSchema } from '@/model/eventCategories'
 import { db } from '../database'
 
 async function getEventCategoryById(id: number) {
-  try {
-    const eventCategory = await db
-      .select()
-      .from(eventCategoriesSchema)
-      .where(eq(eventCategoriesSchema.id, id))
+  const eventCategory = await db
+    .select()
+    .from(eventCategoriesSchema)
+    .where(eq(eventCategoriesSchema.id, id))
 
-    return eventCategory[0]
-  } catch (err) {
-    console.log('getEventCategoryById: ', err)
-    throw err
-  }
+  return eventCategory[0]
 }
 
 export default getEventCategoryById
