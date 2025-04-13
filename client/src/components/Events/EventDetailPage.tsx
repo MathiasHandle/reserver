@@ -6,6 +6,7 @@ import {
   useUser,
   useUserCreatedEvents,
 } from '@/hooks'
+import { useStore } from '@/store'
 import { Link, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Button } from '../ui/button'
@@ -21,10 +22,10 @@ type EventDetailPageProps = {
 function EventDetailPage({ eventId }: EventDetailPageProps) {
   const { data: event, isFetching: isFetchingEvent } = useGetEventDetail(eventId)
   const { mutate: joinEvent } = useJoinEvent()
-
   const { data: user } = useUser()
   const { data: joinedEvents } = useGetJoinedEvents(!!user)
   const { data: createdEvents } = useUserCreatedEvents(!!user)
+  const setModal = useStore(state => state.setModal)
 
   const isJoined = joinedEvents?.some(event => event.id === eventId)
   const isOwner = createdEvents?.some(event => event.id === eventId)
@@ -41,6 +42,15 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
         router.navigate({ to: '/events', search: { categoryId: -1, sort: 'desc' } })
       },
     })
+  }
+
+  function onJoinEventClick() {
+    if (!user) {
+      setModal('login', { isOpen: true })
+      return
+    }
+
+    joinEvent(eventId)
   }
 
   return (
@@ -92,7 +102,7 @@ function EventDetailPage({ eventId }: EventDetailPageProps) {
                     variant={'action'}
                     disabled={isJoined || isOwner}
                     size={'lg'}
-                    onClick={() => joinEvent(eventId)}
+                    onClick={onJoinEventClick}
                   >
                     {isOwner && 'You created this event'}
                     {isJoined && 'Joined'}

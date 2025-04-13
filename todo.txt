@@ -20,7 +20,7 @@ TODO event detail page
     DONE if Im owner I cant joint!
   DONE delete event (if im the owner)
   DONE implement joining an event
-  FIXME if user is not logged in and wants to join -> open login modal
+  DONE if user is not logged in and wants to join -> open login modal
   DONE if user already joined -> display different text in button
   DONE go back to events button
   TODO update event
