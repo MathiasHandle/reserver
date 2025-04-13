@@ -34,8 +34,4 @@ FIXME add notNull to userEvents schema?
 TODO remove all todos, fixme, bug ...
 
 TODO update npm packages (client & server)
-TODO clean dummy data
-  TODO add some users into events (currenly non of the events has attendees)
-TODO add database to .gitignore
-TODO remove unused sql migrations in root
 TODO try build (client & server)
