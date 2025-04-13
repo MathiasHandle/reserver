@@ -1,18 +1,11 @@
-import { useGetJoinedEvents, useLogoutUser, useUser, useUserCreatedEvents } from '@/hooks'
+import { useGetJoinedEvents, useUser, useUserCreatedEvents } from '@/hooks'
 import useGetEventCategories from '@/hooks/api/events/useGetEventCategories'
-import { useRouter } from '@tanstack/react-router'
 import { EventForm, EventList, EventListGhost } from '../Events'
 import { UserDetail } from './components'
 
 // TODO make this route protected
 function ProfilePage() {
   const { data: user } = useUser()
-
-  const router = useRouter()
-
-  const { mutate: logoutUser } = useLogoutUser(() => {
-    router.navigate({ to: '/' })
-  })
 
   const { data: eventCategories } = useGetEventCategories()
 
@@ -25,7 +18,7 @@ function ProfilePage() {
 
       <div className="my-8 flex flex-col gap-6">
         <section className="m-auto flex w-fit flex-col items-start gap-6 sm:w-full sm:flex-row sm:justify-center">
-          {user && <UserDetail userData={user} onLogout={logoutUser} />}
+          {user && <UserDetail userData={user} />}
 
           {eventCategories && (
             <div className="w-full sm:w-1/2">
