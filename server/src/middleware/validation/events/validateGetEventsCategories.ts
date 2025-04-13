@@ -1,10 +1,10 @@
 import type { GetEventCategoriesQueryParams } from '@/controllers/events/eventTypes'
 import { ValidationError } from '@/services/error'
-import type { TypedRequest } from '@/types/sharedTypes'
+import type { ApiEmptyPathParams, ApiEmptyRequestBody, TypedRequest } from '@/types/sharedTypes'
 import type { NextFunction, Response } from 'express'
 
 const validateGetEventCategories = (
-  req: TypedRequest<undefined, undefined, GetEventCategoriesQueryParams>,
+  req: TypedRequest<ApiEmptyPathParams, ApiEmptyRequestBody, GetEventCategoriesQueryParams>,
   _res: Response,
   next: NextFunction
 ) => {

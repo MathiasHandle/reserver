@@ -6,29 +6,24 @@ import { eq, getTableColumns, sql } from 'drizzle-orm'
 import { db } from '../database'
 
 async function getEventsCreatedByUser(userId: number): Promise<Event[] | undefined> {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { categoryId, ...event } = getTableColumns(eventsSchema)
-    const eventCategory = getTableColumns(eventCategoriesSchema)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { categoryId, ...event } = getTableColumns(eventsSchema)
+  const eventCategory = getTableColumns(eventCategoriesSchema)
 
-    const events = await db
-      .select({
-        ...event,
-        eventCategory,
-        participantsCount: sql<number>`(
+  const events = await db
+    .select({
+      ...event,
+      eventCategory,
+      participantsCount: sql<number>`(
           SELECT COUNT(*) FROM ${userEventsSchema}
           WHERE ${userEventsSchema.eventId} = ${eventsSchema.id}
         )`.as('participantsCount'),
-      })
-      .from(eventsSchema)
-      .where(eq(eventsSchema.hostId, userId))
-      .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
+    })
+    .from(eventsSchema)
+    .where(eq(eventsSchema.hostId, userId))
+    .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
 
-    return events
-  } catch (err) {
-    console.log('getEventsByUser: ', err)
-    throw err
-  }
+  return events
 }
 
 export default getEventsCreatedByUser

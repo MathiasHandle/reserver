@@ -54,13 +54,12 @@ TODO automatical sign in for user after registration
 
 Server
 FIXME check if all errors are handled properly
-  TODO try catch in all controllers
-  TODO return next(err) - dont need to check for type
+  DONE try catch in all controllers
+  DONE return next(err) - dont need to check for type
   TODO create new Internal Server error type
   TODO notFoundError -> return 404 and delete argument of fn as not to overwrite it
-  FIXME validateJoinEvent -> move event not found validation to servise layer
-  TODO remove try catch in servise layer and do logging in controllers if needed
-  TODO replace all (!userId) return with throw UnauthorizedError + comment shouldnt happen
+  DONE remove try catch in servise layer and do logging in controllers if needed
+  DONE replace all (!userId) return with throw UnauthorizedError + comment shouldnt happen
   TODO set detail as null in UnauthorizedError and make it optional + refactor code
   TODO set status code as readonly for all error messages
 DONE Request<...> -> TypedRequest<...>
@@ -68,8 +67,6 @@ TODO remove console.logs
 TODO extract participantsCount to fn / query and reuse it
 DONE change default type for TypedRequest -> TRequestBody to ApiEmptyRequestBody
 DONE change default type for TypedRequest -> TQueryParams to EmptyObject
-TODO new error for Internal server error (controllers)
-TODO use zod in ALL validators
 FIXME add notNull to userEvents schema
 
 

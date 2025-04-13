@@ -15,31 +15,27 @@ async function getAllEvents(options?: GetAllEventsQueryParams): Promise<Event[] 
 
   const { limit, offset, categoryId: categoryIdFilter, sort } = { ...defaultOptions, ...options }
 
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { categoryId, ...eventRest } = getTableColumns(eventsSchema)
-    const eventCategory = getTableColumns(eventCategoriesSchema)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { categoryId, ...eventRest } = getTableColumns(eventsSchema)
+  const eventCategory = getTableColumns(eventCategoriesSchema)
 
-    const eventsData = await db
-      .select({
-        ...eventRest,
-        eventCategory,
-        participantsCount: sql<number>`(
+  const eventsData = await db
+    .select({
+      ...eventRest,
+      eventCategory,
+      participantsCount: sql<number>`(
         SELECT COUNT(*) FROM ${userEventsSchema}
         WHERE ${userEventsSchema.eventId} = ${eventsSchema.id}
       )`.as('participantsCount'),
-      })
-      .from(eventsSchema)
-      .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
-      .limit(limit)
-      .offset(offset)
-      .where(categoryIdFilter ? eq(eventsSchema.categoryId, categoryIdFilter) : undefined)
-      .orderBy(sort === 'asc' ? asc(sql`participantsCount`) : desc(sql`participantsCount`))
+    })
+    .from(eventsSchema)
+    .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
+    .limit(limit)
+    .offset(offset)
+    .where(categoryIdFilter ? eq(eventsSchema.categoryId, categoryIdFilter) : undefined)
+    .orderBy(sort === 'asc' ? asc(sql`participantsCount`) : desc(sql`participantsCount`))
 
-    return eventsData
-  } catch (err) {
-    console.log(err)
-  }
+  return eventsData
 }
 
 export default getAllEvents

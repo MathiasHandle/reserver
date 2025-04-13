@@ -33,8 +33,8 @@ async function validateEditEvent(
           ...err.flatten().fieldErrors,
         },
       })
-      next(validationError)
-      return
+
+      return next(validationError)
     }
 
     next(err)
