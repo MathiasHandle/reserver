@@ -26,6 +26,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { ApiError } from '@/services/fetch/apiTypes'
 import type { ControllerRenderProps } from 'react-hook-form'
 
 const formSchema = z.object({
@@ -76,7 +77,20 @@ function EventForm(props: EventFormProps) {
         }
       )
     } else {
-      createEvent(values)
+      createEvent(values, {
+        onError(err) {
+          if (err instanceof ApiError) {
+            // Access the shape of the Zod schema to get the keys
+            const schemaShape = formSchema.shape
+
+            Object.keys(schemaShape).forEach(key => {
+              if (err.detail.detail[key]) {
+                form.setError(key as keyof FormSchema, { message: err.detail.detail[key] })
+              }
+            })
+          }
+        },
+      })
     }
   }
 

@@ -6,29 +6,24 @@ import { eq, getTableColumns, sql } from 'drizzle-orm'
 import { db } from '../database'
 
 async function getEventByName(eventName: string): Promise<Event | undefined> {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { categoryId, ...eventDetail } = getTableColumns(eventsSchema)
-    const eventCategory = getTableColumns(eventCategoriesSchema)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { categoryId, ...eventDetail } = getTableColumns(eventsSchema)
+  const eventCategory = getTableColumns(eventCategoriesSchema)
 
-    const event = await db
-      .select({
-        ...eventDetail,
-        eventCategory,
-        participantsCount: sql<number>`(
+  const event = await db
+    .select({
+      ...eventDetail,
+      eventCategory,
+      participantsCount: sql<number>`(
           SELECT COUNT(*) FROM ${userEventsSchema}
           WHERE ${userEventsSchema.eventId} = ${eventsSchema.id}
         )`.as('participantsCount'),
-      })
-      .from(eventsSchema)
-      .where(eq(eventsSchema.name, eventName))
-      .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
+    })
+    .from(eventsSchema)
+    .where(eq(eventsSchema.name, eventName))
+    .leftJoin(eventCategoriesSchema, eq(eventsSchema.categoryId, eventCategoriesSchema.id))
 
-    return event[0]
-  } catch (err) {
-    console.log('getEventByName: ', err)
-    throw err
-  }
+  return event[0]
 }
 
 export default getEventByName
