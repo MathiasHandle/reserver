@@ -1,19 +1,18 @@
 Client
-DONE HP
-  DONE top 3 events
-
-
-TODO events page
-  DONE sorting by categories
+Events page
   TODO pagination
+
+
+Profile
+  TODO reset form after event submit
+  TODO delete user
 
 
 TODO event detail page
   TODO update event
     FIXME cannot change time
-    DONE close popup onSuccess
-    DONE when returing via button, events list is not refetche
   TODO un-join event
+  TODO img for event
   
 TODO ghosts -> separate components
 
@@ -23,11 +22,22 @@ TODO better implementation for protected route /profile
 
 
 Registration
-DONE close modal after sucessfull Registration
 TODO automatic sign in for user after registration
+
+
 
 
 Server
 TODO extract participantsCount to fn / query and reuse it
 FIXME add notNull to userEvents schema?
-TODO try build (client & server)
+TODO try build & deploy (client & server)
+
+
+
+
+Rest / Common
+TODO tests (FE / BE)
+
+TODO Docker?
+TODO Open API generation from types / zod for BE, and then types generation for FE?
+TODO send email with verification mail after registration?
