@@ -1,5 +1,4 @@
-import { EventListGhost } from '@/components/Events'
-import { EventCard } from '@/components/Events/components'
+import { EventCard, EventListGhost } from '@/components/Events'
 import { useGetEvents } from '@/hooks'
 
 function TopEvents() {
@@ -9,7 +8,6 @@ function TopEvents() {
   })
 
   // FIXME return select  -> data.events.events
-  // FIXME move EventCard from /components to upper level
 
   return (
     <>

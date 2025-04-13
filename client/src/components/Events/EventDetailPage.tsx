@@ -11,9 +11,7 @@ import { Link, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
-import EventCardFooter from './components/EventCardFooter'
-import EventDetailGhost from './components/EventDetailGhost'
-import EventFormModal from './components/EventFormModal'
+import { EventCardFooter, EventDetailGhost, EventFormModal } from './components'
 
 type EventDetailPageProps = {
   eventId: number

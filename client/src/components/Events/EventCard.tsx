@@ -2,7 +2,7 @@ import { Event } from '@/api/events/eventTypes'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { truncateText } from '@/utils'
 import { Link } from '@tanstack/react-router'
-import EventCardFooter from './EventCardFooter'
+import { EventCardFooter } from './components'
 
 type EventCardProps = {
   event: Event

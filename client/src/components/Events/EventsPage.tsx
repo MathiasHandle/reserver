@@ -5,7 +5,7 @@ import { useGetEvents } from '@/hooks'
 import { EventsPageSearchParams } from '@/routes/events'
 import { useState } from 'react'
 
-import EventFilters from './components/EventFilters'
+import { EventFilters } from './components'
 import EventList from './EventList'
 import EventListGhost from './EventListGhost'
 
