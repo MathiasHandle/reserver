@@ -1,7 +1,7 @@
 import httpCodes from '@/constants/httpCodes'
 import { eventsController } from '@/controllers/events'
 import { usersController } from '@/controllers/users'
-import { checkAuth } from '@/middleware/auth'
+import { checkAuth, checkNotAuth } from '@/middleware/auth'
 import eventsValidator from '@/middleware/validation/events'
 import usersValidator from '@/middleware/validation/users'
 import type { Request, Response } from 'express'
@@ -21,9 +21,13 @@ const usersBaseUrl = '/api/users'
 // get all users -> just for testing
 router.get(usersBaseUrl, usersController.handleGetAllUsers)
 
-// TODO add auth middleware -> check if user is logged in
 // register new user
-router.post(usersBaseUrl, usersValidator.validateCreateUser, usersController.handleCreateUser)
+router.post(
+  usersBaseUrl,
+  checkNotAuth,
+  usersValidator.validateCreateUser,
+  usersController.handleCreateUser
+)
 
 // get current user
 router.get(`${usersBaseUrl}/me`, checkAuth, usersController.handleCheckAuth)
@@ -39,9 +43,13 @@ router.delete(
   usersController.handleDeleteUser
 )
 
-// TODO add auth middleware
 // login user
-router.post(`${usersBaseUrl}/login`, usersValidator.validateLogin, usersController.handleLogin)
+router.post(
+  `${usersBaseUrl}/login`,
+  checkNotAuth,
+  usersValidator.validateLogin,
+  usersController.handleLogin
+)
 
 //#endregion
 
