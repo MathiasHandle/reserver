@@ -2,17 +2,14 @@ import httpCodes from '@/constants/httpCodes'
 import type { CustomErrorDetail } from './customError'
 import CustomError from './customError'
 
-class NotFoundError<T extends CustomErrorDetail> extends CustomError<T> {
-  constructor({
-    message,
-    detail,
-    status = httpCodes.NOT_FOUND,
-  }: {
-    message: string
-    detail: T
-    status?: (typeof httpCodes)[keyof typeof httpCodes]
-  }) {
-    super({ name: 'NOT_FOUND', message, status, detail })
+class NotFoundError<T extends CustomErrorDetail> extends CustomError<T | null> {
+  constructor({ message, detail }: { message: string; detail?: T }) {
+    super({
+      name: 'NOT_FOUND',
+      message,
+      status: httpCodes.NOT_FOUND,
+      detail: detail ?? null,
+    })
   }
 }
 

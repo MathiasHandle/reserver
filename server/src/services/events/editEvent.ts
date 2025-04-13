@@ -13,7 +13,6 @@ async function editEvent(event: EditEventRequest, userId: number) {
   if (currentEvent.hostId !== userId) {
     throw new UnauthorizedError({
       message: 'User is not host of the event',
-      detail: null,
     })
   }
 

@@ -13,7 +13,6 @@ async function deleteUser(userId: number) {
   if (result.length === 0) {
     throw new NotFoundError({
       message: 'User not found',
-      detail: null,
     })
   }
 }

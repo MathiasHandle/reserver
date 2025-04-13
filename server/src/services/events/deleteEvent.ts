@@ -12,7 +12,6 @@ async function deleteEvent(eventId: number, userId: number) {
   if (event.hostId !== userId) {
     throw new UnauthorizedError({
       message: 'User is not host of the event',
-      detail: null,
     })
   }
 

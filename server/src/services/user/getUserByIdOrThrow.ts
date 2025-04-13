@@ -7,7 +7,6 @@ async function getUserByIdOrThrow(userId: number) {
   if (!user) {
     throw new NotFoundError({
       message: 'User not found',
-      detail: null,
     })
   }
 

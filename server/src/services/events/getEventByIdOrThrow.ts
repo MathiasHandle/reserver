@@ -7,7 +7,6 @@ async function getEventByIdOrThrow(eventId: number) {
   if (!event) {
     throw new NotFoundError({
       message: 'Event not found',
-      detail: null,
     })
   }
 

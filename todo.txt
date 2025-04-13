@@ -41,7 +41,7 @@ DONE profile page
 DONE footer
   - with dumb links
 
-TODO remove console.logs
+DONE remove console.logs
 
 TODO ghosts -> separate components
 
@@ -53,25 +53,21 @@ TODO automatical sign in for user after registration
 
 
 Server
-FIXME check if all errors are handled properly
+DONE check if all errors are handled properly
   DONE try catch in all controllers
   DONE return next(err) - dont need to check for type
-  TODO create new Internal Server error type
-  TODO notFoundError -> return 404 and delete argument of fn as not to overwrite it
+  DONE notFoundError -> return 404 and delete argument of fn as not to overwrite it
   DONE remove try catch in servise layer and do logging in controllers if needed
   DONE replace all (!userId) return with throw UnauthorizedError + comment shouldnt happen
-  TODO set detail as null in UnauthorizedError and make it optional + refactor code
-  TODO set status code as readonly for all error messages
 DONE Request<...> -> TypedRequest<...>
-TODO remove console.logs
+DONE remove console.logs
 TODO extract participantsCount to fn / query and reuse it
 DONE change default type for TypedRequest -> TRequestBody to ApiEmptyRequestBody
 DONE change default type for TypedRequest -> TQueryParams to EmptyObject
-FIXME add notNull to userEvents schema
+FIXME add notNull to userEvents schema?
 
 
-TODO getEventById and getEventByIdOrThrow -> use as needed(throw variant for more DRY error handling)
-- replace deleteEvent implementation + error handling
+DONE getEventById and getEventByIdOrThrow -> use as needed(throw variant for more DRY error handling)
 
 
 

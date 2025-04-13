@@ -17,7 +17,7 @@ async function validateJoinEvent(
   try {
     const userId = req.session.user?.id
     if (!userId) {
-      throw new UnauthorizedError({ detail: null })
+      throw new UnauthorizedError()
     }
 
     const { eventId } = req.params

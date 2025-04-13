@@ -107,7 +107,7 @@ async function handleGetMyCreatedEvents(
     const userId = req.session.user?.id
     // Shouldnt happen, because of auth middleware
     if (!userId) {
-      throw new UnauthorizedError({ detail: null })
+      throw new UnauthorizedError()
     }
 
     const events = await getEventsCreatedByUser(userId)
@@ -127,7 +127,7 @@ async function handleJoinEvent(
     const userId = req.session.user?.id
     // Shouldnt happen, because of auth middleware
     if (!userId) {
-      throw new UnauthorizedError({ detail: null })
+      throw new UnauthorizedError()
     }
 
     await joinEvent(Number(req.params.eventId), userId)
@@ -147,7 +147,7 @@ async function handleGetJoinedEvents(
     const userId = req.session.user?.id
     // Shouldnt happen, because of auth middleware
     if (!userId) {
-      throw new UnauthorizedError({ detail: null })
+      throw new UnauthorizedError()
     }
 
     const events = await getJoinedEvents(userId)
@@ -167,7 +167,7 @@ async function handleEditEvent(
     const userId = req.session.user?.id
     // Shouldnt happen, because of auth middleware
     if (!userId) {
-      throw new UnauthorizedError({ detail: null })
+      throw new UnauthorizedError()
     }
 
     await editEvent(req.body, userId)
@@ -187,7 +187,7 @@ async function handleDeleteEvent(
     const userId = req.session.user?.id
     // Shouldnt happen, because of auth middleware
     if (!userId) {
-      throw new UnauthorizedError({ detail: null })
+      throw new UnauthorizedError()
     }
 
     await deleteEvent(Number(req.params.eventId), userId)
