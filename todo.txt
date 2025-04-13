@@ -1,6 +1,6 @@
 Client
-TODO HP
-  TODO top 3 events
+DONE HP
+  DONE top 3 events
 
 TODO events page
   DONE sorting by categories

@@ -1,5 +1,4 @@
-import { MainBanner } from './components'
-import TopCategories from './components/TopCategories'
+import { MainBanner, TopCategories, TopEvents } from './components'
 
 function Homepage() {
   return (
@@ -7,7 +6,15 @@ function Homepage() {
       <main className="container">
         <MainBanner />
 
-        <TopCategories />
+        <section className="container m-auto my-8">
+          <h2 className="mb-4 text-center text-2xl font-bold sm:mb-6">Top Categories</h2>
+          <TopCategories />
+        </section>
+
+        <section className="container m-auto my-8">
+          <h2 className="mb-4 text-center text-2xl font-bold sm:mb-6">Top Events</h2>
+          <TopEvents />
+        </section>
       </main>
     </>
   )
