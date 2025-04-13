@@ -3,7 +3,6 @@ import useGetEventCategories from '@/hooks/api/events/useGetEventCategories'
 import { EventForm, EventList, EventListGhost } from '../Events'
 import { UserDetail } from './components'
 
-// TODO make this route protected
 function ProfilePage() {
   const { data: user } = useUser()
 

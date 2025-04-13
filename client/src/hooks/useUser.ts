@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import useGetUser from './api/user/useGetUser'
 
 function useUser() {
-  const { data, error } = useGetUser()
+  const { data, error, isFetching } = useGetUser()
 
   useEffect(() => {
     if (error instanceof ApiError) {
@@ -19,6 +19,7 @@ function useUser() {
   return {
     data,
     error,
+    isFetching,
   }
 }
 
