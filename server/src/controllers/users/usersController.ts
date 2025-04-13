@@ -77,12 +77,11 @@ async function handleLogin(
 }
 
 // TODO error handling check
-function handleCheckAuth(
+function handleGetCurrentUser(
   req: Request<ApiEmptyRequestBody>,
   res: Response<CheckAuthResponse>,
   next: NextFunction
 ) {
-  // TODO delete this check + introduce new AuthenticatedRequest type
   if (!req.session.user) {
     const unauthorizedError = new UnauthorizedError<null>({
       detail: null,
@@ -115,6 +114,6 @@ export default {
   handleCreateUser,
   handleDeleteUser,
   handleLogin,
-  handleCheckAuth,
+  handleGetCurrentUser,
   handleLogout,
 }

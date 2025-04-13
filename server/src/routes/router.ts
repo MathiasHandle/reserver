@@ -30,15 +30,15 @@ router.post(
 )
 
 // get current user
-router.get(`${usersBaseUrl}/me`, checkAuth, usersController.handleCheckAuth)
+router.get(`${usersBaseUrl}/me`, checkAuth, usersController.handleGetCurrentUser)
 
 // logout user
 router.post(`${usersBaseUrl}/logout`, checkAuth, usersController.handleLogout)
 
-// TODO add auth middleware
-// delete user
+// delete user -> only for testing (not used in app)
 router.delete(
   `${usersBaseUrl}/:userId`,
+  checkAuth,
   usersValidator.validateDeleteUser,
   usersController.handleDeleteUser
 )

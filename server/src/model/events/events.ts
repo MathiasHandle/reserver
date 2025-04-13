@@ -8,7 +8,9 @@ const eventsSchema = sqliteTable('events', {
   date: text('date').notNull(),
   maxCapacity: int('max_capacity').notNull(),
   hostId: int('host_id')
-    .references(() => usersSchema.id)
+    .references(() => usersSchema.id, {
+      onDelete: 'cascade',
+    })
     .notNull(),
   categoryId: int('category_id').references(() => eventCategoriesSchema.id),
   description: text('description').notNull(),
