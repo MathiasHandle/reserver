@@ -1,0 +1,42 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - CHOKIDAR_USEPOLLING=true
+    profiles:
+      - dev
+      - prod
+    develop:
+      watch:
+        - path: ./server/src
+          target: /app/src
+          action: sync
+        - path: ./server/package.json
+          action: rebuild
+    ports:
+      - ${SERVER_PORT:-3020}:3020
+    restart: ${RESTART_POLICY:-no}
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - CHOKIDAR_USEPOLLING=true
+    profiles:
+      - dev
+      - prod
+    develop:
+      watch:
+        - path: ./client/src
+          target: /app/src
+          action: sync
+        - path: ./client/package.json
+          action: rebuild
+    ports:
+      - ${CLIENT_PORT:-3010}:3010
+    restart: ${RESTART_POLICY:-no}
