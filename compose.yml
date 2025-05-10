@@ -1,4 +1,10 @@
 services:
+  nginx-reverse-proxy:
+    image: nginx:1.28.0
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
   server:
     build:
       context: ./server
