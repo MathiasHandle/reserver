@@ -1,20 +1,28 @@
 services:
   nginx-reverse-proxy:
     image: nginx:1.28.0
+    depends_on:
+      - server
+      - client
     ports:
       - 80:80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      # nginx docker image supports env via template files https://hub.docker.com/_/nginx
+      - ./default.conf.template:/etc/nginx/templates/default.conf.template
+    env_file:
+      - .env.${BUILD_TARGET}
+    restart: ${RESTART_POLICY}
+
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
+      target: ${BUILD_TARGET}
     environment:
-      - NODE_ENV=${NODE_ENV:-development}
+      - NODE_ENV=${NODE_ENV}
       - CHOKIDAR_USEPOLLING=true
-    profiles:
-      - dev
-      - prod
+    volumes:
+      - ./server/database.db:/app/database.db
     develop:
       watch:
         - path: ./server/src
@@ -23,19 +31,17 @@ services:
         - path: ./server/package.json
           action: rebuild
     ports:
-      - ${SERVER_PORT:-3020}:3020
-    restart: ${RESTART_POLICY:-no}
+      - ${SERVER_PORT}:${SERVER_PORT}
+    restart: ${RESTART_POLICY}
 
   client:
     build:
       context: ./client
       dockerfile: Dockerfile
+      target: ${BUILD_TARGET}
     environment:
-      - NODE_ENV=${NODE_ENV:-development}
+      - NODE_ENV=${NODE_ENV}
       - CHOKIDAR_USEPOLLING=true
-    profiles:
-      - dev
-      - prod
     develop:
       watch:
         - path: ./client/src
@@ -44,5 +50,5 @@ services:
         - path: ./client/package.json
           action: rebuild
     ports:
-      - ${CLIENT_PORT:-3010}:3010
-    restart: ${RESTART_POLICY:-no}
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    restart: ${RESTART_POLICY}

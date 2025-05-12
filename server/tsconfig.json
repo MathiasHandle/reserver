@@ -15,5 +15,8 @@
     "skipLibCheck": true,
     "strict": true
   },
+  "tsc-alias": {
+    "resolveFullPaths": true
+  },
   "include": ["src/**/*", "src/types/express-session.d.ts"]
 }
