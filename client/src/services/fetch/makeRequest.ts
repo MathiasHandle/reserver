@@ -1,7 +1,7 @@
 import { transformPathParams, transformQueryParams } from '@/utils'
 import { ApiError } from './apiTypes'
 
-const BASE_URL = 'http://localhost:3020'
+const BASE_URL = import.meta.env.VITE_SERVER_URL
 const API_URL = `${BASE_URL}/api`
 
 type FetchOptions<TRequestBody, TQueryParams, TPathParams> = {

@@ -1,0 +1,54 @@
+services:
+  nginx-reverse-proxy:
+    image: nginx:1.28.0
+    depends_on:
+      - server
+      - client
+    ports:
+      - 80:80
+    volumes:
+      # nginx docker image supports env via template files https://hub.docker.com/_/nginx
+      - ./default.conf.template:/etc/nginx/templates/default.conf.template
+    env_file:
+      - .env.${BUILD_TARGET}
+    restart: ${RESTART_POLICY}
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: ${BUILD_TARGET}
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./server/database.db:/app/database.db
+    develop:
+      watch:
+        - path: ./server/src
+          target: /app/src
+          action: sync
+        - path: ./server/package.json
+          action: rebuild
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    restart: ${RESTART_POLICY}
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      target: ${BUILD_TARGET}
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - CHOKIDAR_USEPOLLING=true
+    develop:
+      watch:
+        - path: ./client/src
+          target: /app/src
+          action: sync
+        - path: ./client/package.json
+          action: rebuild
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    restart: ${RESTART_POLICY}

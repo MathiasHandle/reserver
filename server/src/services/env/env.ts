@@ -6,8 +6,8 @@ const envFile = config({ path: `.env.${process.env.NODE_ENV}` })
 
 const envSchema = z.object({
   NODE_ENV: z
-    .union([z.literal('development'), z.literal('prod')])
-    .default(process.env.NODE_ENV as 'development' | 'prod'),
+    .union([z.literal('dev'), z.literal('prod')])
+    .default(process.env.NODE_ENV as 'dev' | 'prod'),
   ORIGIN: z.string(),
   PORT: z.coerce.number(),
   SESSION_SECRET: z.string().min(32),

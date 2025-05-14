@@ -10,9 +10,11 @@
     "check:prettier": "prettier . --config ./.prettierrc --check",
     "check:prettier-fix": "prettier . --config ./.prettierrc --write",
     "dev": "vite",
+    "dev:docker": "vite --mode docker --host",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build:docker": "tsc -b && vite build --mode docker",
+    "preview": "vite preview --host",
+    "preview:docker": "vite preview --mode docker --host"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

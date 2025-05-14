@@ -1,0 +1,28 @@
+add_header X-Served-By 'nginx' always;
+
+upstream server {
+  server server:${SERVER_PORT};
+}
+
+upstream client {
+  server client:${CLIENT_PORT};
+}
+
+server {
+  listen 80;
+  server_name localhost;
+
+  # Proxy all /api/* requests to the node server
+  location /api/ {
+    proxy_pass http://server;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+  }
+
+  # Proxy all other requests to the React app
+  location / {
+    proxy_pass http://client;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+  }
+}
